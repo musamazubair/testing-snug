@@ -1,0 +1,7 @@
+<span>Bag</span>
+{%- if cart.item_count > 0 -%}
+<div class="cart-bubble-count typography-heading typography-heading--7">
+    <span aria-hidden="true">{{ cart.item_count }}</span>
+    <span class="visually-hidden">{{ cart.item_count }} {{ cart.item_count | pluralize: 'item', 'items' }}</span>
+</div>
+{%- endif -%}

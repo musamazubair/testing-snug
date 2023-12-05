@@ -1,1 +1,20 @@
-{"sections":{"main":{"type":"main-list-collections","settings":{"title":"Collections","sort":"alphabetical","image_ratio":"square","columns_desktop":3,"columns_mobile":"2"}}},"order":["main"]}
+{
+  "layout": "theme",
+  "sections": {
+    "meta-redirect": {
+      "type": "meta-redirect",
+      "settings": {
+        "redirect_link": "\/"
+      }
+    },
+    "list-collections-main": {
+      "type": "list-collections-main",
+      "settings": {
+      }
+    }
+  },
+  "order": [
+    "meta-redirect",
+    "list-collections-main"
+  ]
+}

@@ -1,1 +1,9 @@
-{"sections":{"main":{"type":"main-404","settings":{}}},"order":["main"]}
+{
+	"layout": "theme",
+	"sections": {
+		"four0four-main": {
+			"type": "four0four-main"
+		}
+	},
+	"order": ["four0four-main"]
+}

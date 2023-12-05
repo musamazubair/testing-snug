@@ -1,0 +1,443 @@
+{% style %}
+
+    @font-face {
+        font-family: 'adobe_garamond';
+        src: url({{ 'font-adobe_garamond_pro_regular.woff2' | asset_url }}) format('woff2'),
+            url({{ 'font-adobe_garamond_pro_regular.woff' | asset_url }}) format('woff');
+        font-weight: 400;
+        font-style: normal;
+        font-display: swap;
+    }
+
+
+    @font-face {
+        font-family: 'adobe_garamond';
+        src: url({{ 'font-adobe_garamond_pro_italic.woff2' | asset_url }}) format('woff2'),
+            url({{ 'font-adobe_garamond_pro_italic.woff' | asset_url }}) format('woff');
+        font-weight: 400;
+        font-style: italic;
+        font-display: swap;
+    }
+
+    @font-face {
+        font-family: 'itc_avant_garde_gothic';
+        src: url({{  'font-itc_avant_garde_gothic_mdcn.woff2' | asset_url }}) format('woff2'),
+            url({{  'font-itc_avant_garde_gothic_mdcn.woff' | asset_url }}) format('woff');
+        font-weight: 500;
+        font-style: normal;
+        font-display: swap;
+    }
+
+    @font-face {
+        font-family: 'itc_avant_garde_gothic';
+        src: url({{  'font-itc_avant_garde_gothic_mdcnobl.woff2' | asset_url }}) format('woff2'),
+            url({{  'font-itc_avant_garde_gothic_mdcnobl.woff' | asset_url }}) format('woff');
+        font-weight: 500;
+        font-style: italic;
+        font-display: swap;
+    }
+
+    @font-face {
+        font-family: 'itc_avant_garde_gothic';
+        src: url({{  'font-itc_avant_garde_gothic_demicn.woff2' | asset_url }}) format('woff2'),
+            url({{  'font-itc_avant_garde_gothic_demicn.woff' | asset_url }}) format('woff');
+        font-weight: 600;
+        font-style: normal;
+        font-display: swap;
+    }
+
+    @font-face {
+        font-family: 'itc_avant_garde_gothic';
+        src: url({{  'font-itc_avant_garde_gothic_demicnobl.woff2' | asset_url }}) format('woff2'),
+            url({{  'font-itc_avant_garde_gothic_demicnobl.woff' | asset_url }}) format('woff');
+        font-weight: 600;
+        font-style: italic;
+        font-display: swap;
+    }
+
+    :root {
+
+        /* Font Declaration */
+
+        --font-serif-family: 'adobe_garamond';
+        --font-sans-serif-family: 'itc_avant_garde_gothic';
+
+        --font-family-heading-1: var(--font-serif-family);
+        --font-weight-heading-1: 400;
+        --font-style-heading-1: normal;
+        --font-size-heading-1-desktop: 6.0rem;
+        --line-height-heading-1-desktop: 6.2rem;
+        --letter-spacing-heading-1-desktop: -0.005rem;
+        --font-size-heading-1-mobile: 5.0rem;
+        --line-height-heading-1-mobile: 5.0rem;
+        --letter-spacing-heading-1-mobile: -0.005rem;
+
+        --font-family-heading-2: var(--font-serif-family);
+        --font-weight-heading-2: 400;
+        --font-style-heading-2: normal;
+        --font-size-heading-2-desktop: 5.0rem;
+        --line-height-heading-2-desktop: 5.6rem;
+        --letter-spacing-heading-2-desktop: -0.005rem;
+        --font-size-heading-2-mobile: 3.4rem;
+        --line-height-heading-2-mobile: 3.4rem;
+        --letter-spacing-heading-2-mobile: -0.005rem;
+
+        --font-family-heading-3: var(--font-serif-family);
+        --font-weight-heading-3: 400;
+        --font-style-heading-3: normal;
+        --font-size-heading-3-desktop: 3.4rem;
+        --line-height-heading-3-desktop: 3.6rem;
+        --letter-spacing-heading-3-desktop: -0.005rem;
+        --font-size-heading-3-mobile: 3.0rem;
+        --line-height-heading-3-mobile: 3.0rem;
+        --letter-spacing-heading-3-mobile: -0.005rem;
+
+        --font-family-heading-4: var(--font-serif-family);
+        --font-weight-heading-4: 400;
+        --font-style-heading-4: normal;
+        --font-size-heading-4-desktop: 3.0rem;
+        --line-height-heading-4-desktop: 3.2rem;
+        --letter-spacing-heading-4-desktop: -0.005rem;
+        --font-size-heading-4-mobile: 2.6rem;
+        --line-height-heading-4-mobile: 2.8rem;
+        --letter-spacing-heading-4-mobile: -0.005rem;
+
+        --font-family-heading-5: var(--font-serif-family);
+        --font-weight-heading-5: 400;
+        --font-style-heading-5: normal;
+        --font-size-heading-5-desktop: 2.6rem;
+        --line-height-heading-5-desktop: 3.0rem;
+        --letter-spacing-heading-5-desktop: -0.005rem;
+        --font-size-heading-5-mobile: 2.0rem;
+        --line-height-heading-5-mobile: 2.2rem;
+        --letter-spacing-heading-5-mobile: -0.005rem;
+
+        --font-family-heading-6: var(--font-serif-family);
+        --font-weight-heading-6: 400;
+        --font-style-heading-6: normal;
+        --font-size-heading-6-desktop: 2.0rem;
+        --line-height-heading-6-desktop: 2.5rem;
+        --letter-spacing-heading-6-desktop: -0.005rem;
+        --font-size-heading-6-mobile: 2.0rem;
+        --line-height-heading-6-mobile: 2.5rem;
+        --letter-spacing-heading-6-mobile: -0.005rem;
+
+        --font-family-heading-7: var(--font-sans-serif-family);
+        --font-weight-heading-7: 500;
+        --font-style-heading-7: normal;
+        --font-size-heading-7-desktop: 3.4rem;
+        --line-height-heading-7-desktop: 3.6rem;
+        --letter-spacing-heading-7-desktop: -0.01rem;
+        --font-size-heading-7-mobile: 2.6rem;
+        --line-height-heading-7-mobile: 2.8rem;
+        --letter-spacing-heading-7-mobile: -0.005rem;
+
+        --font-family-heading-8: var(--font-sans-serif-family);
+        --font-weight-heading-8: 500;
+        --font-style-heading-8: normal;
+        --font-size-heading-8-desktop: 2.6rem;
+        --line-height-heading-8-desktop: 2.8rem;
+        --letter-spacing-heading-8-desktop: -0.005rem;
+        --font-size-heading-8-mobile: 2.0rem;
+        --line-height-heading-8-mobile: 2.5rem;
+        --letter-spacing-heading-8-mobile: -0.005rem;
+
+        --font-family-heading-9: var(--font-sans-serif-family);
+        --font-weight-heading-9: 500;
+        --font-style-heading-9: normal;
+        --font-size-heading-9-desktop: 2.0rem;
+        --line-height-heading-9-desktop: 2.2rem;
+        --letter-spacing-heading-9-desktop: -0.005rem;
+        --font-size-heading-9-mobile: 1.6rem;
+        --line-height-heading-9-mobile: 1.8rem;
+        --letter-spacing-heading-9-mobile: -0.005rem;
+        
+
+        --font-family-body-1: var(--font-sans-serif-family);
+        --font-weight-body-1: 500;
+        --font-style-body-1: normal;
+        --font-size-body-1-desktop: 1.8rem;
+        --line-height-body-1-desktop: 2.2rem;
+        --letter-spacing-body-1-desktop: -0.0025rem;
+        --font-size-body-1-mobile: 1.4rem;
+        --line-height-body-1-mobile: 1.6rem;
+        --letter-spacing-body-1-mobile: normal;
+
+        --font-family-body-2: var(--font-sans-serif-family);
+        --font-weight-body-2: 600;
+        --font-style-body-2: normal;
+        --font-size-body-2-desktop: 1.6rem;
+        --line-height-body-2-desktop: 1.8rem;
+        --letter-spacing-body-2-desktop: -0.0025rem;
+        --font-size-body-2-mobile: 1.6rem;
+        --line-height-body-2-mobile: 1.8rem;
+        --letter-spacing-body-2-mobile: -0.0025rem;
+
+        --font-family-body-2: var(--font-sans-serif-family);
+        --font-weight-body-2: 500;
+        --font-style-body-2: normal;
+        --font-size-body-2-desktop: 1.6rem;
+        --line-height-body-2-desktop: 1.8rem;
+        --letter-spacing-body-2-desktop: -0.0025rem;
+        --font-size-body-2-mobile: 1.4rem;
+        --line-height-body-2-mobile: 1.6rem;
+        --letter-spacing-body-2-mobile: normal;
+
+        --font-family-body-3: var(--font-sans-serif-family);
+        --font-weight-body-3: 500;
+        --font-style-body-3: normal;
+        --font-size-body-3-desktop: 1.4rem;
+        --line-height-body-3-desktop: 1.6rem;
+        --letter-spacing-body-3-desktop: normal;
+        --font-size-body-3-mobile: 1.2rem;
+        --line-height-body-3-mobile: 1.4rem;
+        --letter-spacing-body-3-mobile: normal;
+
+        --font-family-body-4: var(--font-sans-serif-family);
+        --font-weight-body-4: 500;
+        --font-style-body-4: normal;
+        --font-size-body-4-desktop: 1.2rem;
+        --line-height-body-4-desktop: 1.4rem;
+        --letter-spacing-body-4-desktop: normal;
+        --font-size-body-4-mobile: 1.2rem;
+        --line-height-body-4-mobile: 1.4rem;
+        --letter-spacing-body-4-mobile: normal;
+
+        --font-family-body-5: var(--font-serif-family);
+        --font-weight-body-5: 400;
+        --font-style-body-5: normal;
+        --font-size-body-5-desktop: 1.6rem;
+        --line-height-body-5-desktop: 1.8rem;
+        --letter-spacing-body-5-desktop: normal;
+        --font-size-body-5-mobile: 1.4rem;
+        --line-height-body-5-mobile: 1.6rem;
+        --letter-spacing-body-5-mobile: normal;
+
+        --font-family-body-6: var(--font-serif-family);
+        --font-weight-body-6: 400;
+        --font-style-body-6: normal;
+        --font-size-body-6-desktop: 1.4rem;
+        --line-height-body-6-desktop: 1.6rem;
+        --letter-spacing-body-6-desktop: normal;
+        --font-size-body-6-mobile: 1.2rem;
+        --line-height-body-6-mobile: 1.4rem;
+        --letter-spacing-body-6-mobile: normal;
+
+        --font-family-body-7: var(--font-serif-family);
+        --font-weight-body-7: 400;
+        --font-style-body-7: normal;
+        --font-size-body-7-desktop: 1.2rem;
+        --line-height-body-7-desktop: 1.4rem;
+        --letter-spacing-body-7-desktop: normal;
+        --font-size-body-7-mobile: 1.2rem;
+        --line-height-body-7-mobile: 1.4rem;
+        --letter-spacing-body-7-mobile: normal;
+
+
+        /* Font Assignment */
+
+        --font-heading-family: var(--font-serif-family);
+        --font-heading-style: normal;
+        --font-heading-weight: 400;
+        --font-heading-size: var(--font-size-heading-2-desktop);
+        --font-heading-line-height: var(--line-height-heading-2);
+        --font-heading-letter-spacing: var(--letter-spacing-heading-2);
+
+        --font-body-family: var(--font-sans-serif-family);
+        --font-body-style: normal;
+        --font-body-weight: 500;
+        --font-body-size: var(--font-size-body-1-desktop);
+        --font-body-line-height: var( --line-height-body-1);
+        --font-body-letter-spacing: var(--letter-spacing-body-1);
+
+
+        /* Color Declaration */
+
+        --color-black: 0, 0, 0;
+        --color-grey-1: 117, 117, 117;
+        --color-grey-2: 143,143,143;
+        --color-grey-3: 179,179,179;
+        --color-white: 255, 255, 255;
+        --color-red: 152, 0, 0;
+
+        --gradient-backdrop-bottom: linear-gradient(0deg, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0) 100%); 
+
+        
+        /* Color Assignment */
+
+        --color-focus: var(--color-grey-2);
+        --color-shadow: var(--color-black);
+        --color-error: var(--color-red);
+
+        --color-foreground: var(--color-black);
+        --color-background: var(--color-white);
+
+        --color-header-foreground: var(--color-black);
+        --color-header-background: var(--color-white);
+        --color-header-border: var(--color-grey-3);
+        --alpha-header-background: 1;
+        --alpha-header-border: 1;
+
+        --color-button-text: var(--color-black);
+        --color-button-background: var(--color-white);
+        --color-button-border: var(--color-black);
+        --alpha-button-background: 1;
+        --alpha-button-border: 1;
+
+        --color-dropdown-text: var(--color-black);
+        --color-dropdown-background: var(--color-white);
+        --color-dropdown-border: var(--color-grey-3);
+        --color-dropdown-toggle-border: var(--color-grey-3);
+        --color-dropdown-item-border: var(--color-grey-4);
+        --alpha-dropdown-background: 1;
+        --alpha-dropdown-border: 1;
+
+        --color-input-checkbox-background: var(--color-grey-4);
+        --color-input-checkbox-border: var(--color-black);
+        --color-input-checkbox-tick: var(--color-white);
+        --alpha-input-checkbox-background: 1;
+        --alpha-input-checkbox-border: 0;
+
+        --color-input-radio-background: var(--color-grey-4);
+        --color-input-radio-border: var(--color-black);
+        --color-input-radio-tick: var(--color-black);
+        --alpha-input-radio-background: 1;
+        --alpha-input-radio-border: 0;
+
+        --color-input-text: var(--color-black);
+        --color-input-background: var(--color-white);
+        --color-input-border: var(--color-grey-1);
+        --color-input-label: var(--color-black);
+        --alpha-input-background: 1;
+        --alpha-input-border: 1;
+
+        --color-header-text: var(--color-black);
+        --color-header-background: var(--color-white);
+        --alpha-header-background: 1;
+
+        --color-badge-background: var(--color-black);
+        --color-badge-border: var(--color-white);
+        --alpha-badge-border: .1;
+
+        --color-card-hover: var(--color-black);
+
+
+
+        /* Duration */
+
+        --duration-short: 100ms;
+        --duration-default: 200ms;
+        --duration-long: 500ms;
+
+
+        /* Border, Shadow */
+
+
+        --header-border-width: 1px;
+
+
+        --media-border-width: 1px;
+        --media-border-radius: 0px;
+        --media-border-opacity: 0.05;
+        --media-shadow-horizontal-offset: 0px;
+        --media-shadow-vertical-offset: 4px;
+        --media-shadow-blur-radius: 0px;
+        --media-shadow-opacity: 0.0;
+        --media-padding: 0px;
+
+        --card-border-width: 0px;
+        --card-border-radius: 0px;
+        --card-border-opacity: 0.1;
+        --card-shadow-horizontal-offset: 0px;
+        --card-shadow-vertical-offset: 4px;
+        --card-shadow-blur-radius: 0px;
+        --card-shadow-opacity: 0.0;
+        --card-image-padding: 0.0rem;
+        
+        --badge-border-radius: 0px;
+
+        --popup-border-width: 1px;
+        --popup-border-radius: 0px;
+        --popup-border-opacity: 0.1;
+        --popup-shadow-horizontal-offset: 0px;
+        --popup-shadow-vertical-offset: 4px;
+        --popup-shadow-blur-radius: 0px;
+        --popup-shadow-opacity: 0.0;
+
+        --drawer-border-width: 1px;
+        --drawer-border-opacity: 0.1;
+        --drawer-shadow-horizontal-offset: 0px;
+        --drawer-shadow-vertical-offset: 4px;
+        --drawer-shadow-blur-radius: 0px;
+        --drawer-shadow-opacity: 0.0;
+
+        --text-boxes-border-width: 0px;
+        --text-boxes-border-radius: 0px;
+        --text-boxes-border-opacity: 0.1;
+        --text-boxes-shadow-horizontal-offset: 0px;
+        --text-boxes-shadow-vertical-offset: 4px;
+        --text-boxes-shadow-blur-radius: 0px;
+        --text-boxes-shadow-opacity: 0.0;
+
+        --buttons-border-width: 1px;
+        --buttons-border-offset: 0px;
+        --buttons-border-radius: 0px;
+        --buttons-border-radius-outset: 5px;
+        --buttons-border-opacity: 1;
+        --buttons-shadow-horizontal-offset: 0px;
+        --buttons-shadow-vertical-offset: 0px;
+        --buttons-shadow-blur-radius: 0px;
+        --buttons-shadow-opacity: 0.0;
+
+        --inputs-border-width: 1px;
+        --inputs-border-radius: 0px;
+        --inputs-border-opacity: 0.55;
+        --inputs-shadow-horizontal-offset: 0px;
+        --inputs-shadow-vertical-offset: 4px;
+        --inputs-shadow-blur-radius: 0px;
+        --inputs-shadow-opacity: 0.0;
+        --inputs-margin-offset: 0px;
+
+
+        --dropdown-border-style: solid;
+        --dropdown-border-width: 1px;
+        --dropdown-border-radius: 0px;
+        --dropdown-border-opacity: 0.55;
+
+        --variant-pills-border-width: 1px;
+        --variant-pills-border-radius: 0px;
+        --variant-pills-border-opacity: 0.55;
+        --variant-pills-shadow-horizontal-offset: 0px;
+        --variant-pills-shadow-vertical-offset: 4px;
+        --variant-pills-shadow-blur-radius: 0px;
+        --variant-pills-shadow-opacity: 0.0;
+
+        /* Geometry */
+
+        --header-top-position: 30px;
+        --header-height: 60px;
+        --header-bottom-position: calc(var(--header-top-position) + var(--header-height) + 1px);
+
+        --header-top-position-fixed: var(--header-top-position);
+        --header-bottom-position-fixed: var(--header-bottom-position);
+
+        --anchor-target-offset: var(--header-bottom-position);
+
+        /* Viewport Unit */
+        --viewport-height-fixed: 100vh;
+        
+        --vh-unit: var(--vh, 1vh);
+        --vh-100: calc(var(--vh-unit) * 100);
+        
+
+        /* Z-Index */
+        
+        --z-index-header: 100;
+        --z-index-header-drawer: 300;
+        --z-index-cart-drawer: 400;
+        --z-index-modal: 500;
+
+
+    }
+
+{% endstyle %}

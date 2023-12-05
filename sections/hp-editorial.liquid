@@ -1,0 +1,535 @@
+{% style %}
+
+    @media screen and (min-width: 769px) {
+
+        .hp-editorial-{{ section.id }} {
+            display: flex;
+            flex-flow: row nowrap;
+        }
+
+        .hp-editorial-{{ section.id }} .hp-editorial-block{
+            flex: 1 1 100%;
+        }
+    }
+
+    .hp-editorial-{{ section.id }} .hp-banner,
+    .hp-editorial-{{ section.id }} .hp-banner > .media{
+        height: 100%;
+    }
+
+    .hp-editorial-{{ section.id }} .hp-banner > .media{
+        scale: 1.01;
+    }
+
+    @media screen and (min-width: 769px) {
+        .hp-editorial-{{ section.id }} .hp-banner .banner-overlay {
+            padding: 6.7rem 2.6rem 6.7rem;
+        }
+    }
+
+    @media screen and (max-width: 768px) {
+        .hp-editorial-{{ section.id }} .hp-banner .banner-overlay {
+            padding: 5.5rem 1.2rem 5.5rem;
+        }
+    }
+
+    {%- for block in section.blocks -%}
+
+        .hp-editorial-{{ section.id }} .hp-banner-{{ block.id }} .banner-overlay {
+            background-color: rgba(0,0,0,{{ block.settings.overlay_opacity | divided_by: 100.0 | round: 2 }});
+        }
+
+        .hp-editorial-{{ section.id }} .hp-banner-{{ block.id }} .banner-content-overlay{
+            display: grid;
+            justify-content: {{ block.settings.text_placement_hor }};
+            align-content: {{ block.settings.text_placement_vert }};
+            text-align: {{ block.settings.text_alignment }};
+        }
+
+        {%- if block.settings.cta_independent_placement -%}
+            .hp-editorial-{{ section.id }} .hp-banner-{{ block.id }} .banner-cta-overlay{
+                display: grid;
+                justify-content: {{ block.settings.cta_placement_hor }};
+                align-content: {{ block.settings.cta_placement_vert }};
+            }
+        {%- endif -%}
+
+        .hp-editorial-{{ section.id }} .hp-banner-{{ block.id }} .banner-title {
+            color: {{ block.settings.title_color }};
+        }
+
+        .hp-editorial-{{ section.id }} .hp-banner-{{ block.id }} .banner-subtitle {
+            color: {{ block.settings.subtitle_color }};
+        }
+
+        .hp-editorial-{{ section.id }} .hp-banner-{{ block.id }} .banner-paragraph {
+            color: {{ block.settings.paragraph_color }};
+        }
+
+        .hp-editorial-{{ section.id }} .hp-banner-{{ block.id }} .banner-cta-line{
+            justify-content: {{ block.settings.text_alignment }};
+        }
+
+    {%- endfor -%}
+
+{% endstyle %}
+
+<div
+id="hp-editorial-{{ section.id }}"
+class="hp-editorial-{{ section.id }} hp-editorial isolate"
+>
+            
+{%- for block in section.blocks -%}
+
+    <div class="hp-editorial-block-{{ block.id }} hp-editorial-block" {{ block.shopify_attributes }}>
+
+    <div class="hp-banner-{{ block.id }} hp-banner banner">
+
+        {%- unless block.settings.media_size == "media-natural-size" -%}
+            <div class="ratio ratio--100vh">
+        {%- endunless -%}
+
+        {%- case block.settings.media_type -%}
+
+        {%- when 'image' -%}
+
+            <img
+            srcset="{% render 'image-srcset', image: block.settings.image %}"
+            sizes="100vw"
+            src="{{ block.settings.image | image_url: width: 2048 }}"
+            alt="{{ block.settings.image.alt | escape }}"
+            width="{{ block.settings.image.width }}"
+            height="{{ block.settings.image.height }}"
+            loading="eager"
+            class="media hidden-mobile"
+            >
+
+            <img
+            srcset="{% render 'image-srcset', image: block.settings.image_alter %}"
+            sizes="100vw"
+            src="{{ block.settings.image_alter | image_url: width: 2048 }}"
+            alt="{{ block.settings.image_alter.alt | escape }}"
+            width="{{ block.settings.image.width }}"
+            height="{{ block.settings.image.height }}"
+            loading="eager"
+            class="media hidden-desktop"
+            >
+
+        {%- when 'video' -%}
+
+            <video
+            alt="{{ block.settings.video.alt | escape }}"
+            autoplay
+            playsinline
+            muted
+            loop
+            preload="auto"
+            class="media hidden-mobile"
+            >
+            {% for source in block.settings.video.sources %}
+                <source src="{{ source.url }}" type="{{ source.mime_type }}">
+            {% endfor %}
+            </video>
+
+            <video
+            alt="{{ block.settings.video_alter.alt | escape }}"
+            autoplay
+            playsinline
+            muted
+            loop
+            preload="auto"
+            class="media hidden-desktop"
+            >
+            {% for source in block.settings.video_alter.sources %}
+                <source src="{{ source.url }}" type="{{ source.mime_type }}">
+            {% endfor %}
+            </video>
+
+        {%- endcase -%}
+
+
+        {%- unless block.settings.media_size == "media-natural-size" -%}
+            </div>
+        {%- endunless -%}
+
+        <div class="banner-content banner-overlay banner-content-overlay">
+
+            {%- if block.settings.cta_1_link != blank -%}
+            <a class="link link--covering" href="{{ block.settings.cta_1_link }}" aria-hidden="true" tabindex="-1">&nbsp;</a>
+            {%- endif -%}
+
+            {%- if block.settings.title != blank -%}
+            <h2 class="banner-title typography-heading typography-heading--9">{{ block.settings.title | newline_to_br }}</h2>
+            {%- endif -%}
+
+            {%- if block.settings.subtitle != blank -%}
+            <h3 class="banner-subtitle typography-heading typography-heading--1">{{ block.settings.subtitle | newline_to_br }}</h3>
+            {%- endif -%}
+
+            {%- if block.settings.paragraph != blank -%}
+            <div class="banner-paragraph typography-body typography-body--2 typography-body--2-medium">{{ block.settings.paragraph | newline_to_br }}</div>
+            {%- endif -%}
+    
+            {%- if block.settings.cta_1_text != blank or block.settings.cta_2_text != blank -%}
+
+                {%- if block.settings.cta_independent_placement -%}
+                    <div class="banner-overlay banner-cta-overlay">
+                {%- endif -%}
+
+                    <div class="banner-cta-line">
+
+                    {%- if block.settings.cta_1_text != blank -%}
+                    {%- if block.settings.cta_1_link != blank -%}
+                        <a href="{{ block.settings.cta_1_link }}" class="link banner-cta button button--primary-{{ block.settings.cta_1_color }} typography-body typography-body--3">{{ block.settings.cta_1_text }}</a>
+                    {%- else -%}
+                        <span class="banner-cta button button--primary-{{ block.settings.cta_1_color }} typography-body typography-body--3">{{ block.settings.cta_1_text }}</span>
+                    {%- endif -%}
+                    {%- endif -%}
+
+                    {%- if block.settings.cta_2_text != blank -%}
+                    {%- if block.settings.cta_2_link != blank -%}
+                        <a href="{{ block.settings.cta_2_link }}" class="link banner-cta button button--primary-{{ block.settings.cta_2_color }} typography-body typography-body--3">{{ block.settings.cta_2_text }}</a>
+                    {%- else -%}
+                        <span class="banner-cta button button--primary-{{ block.settings.cta_2_color }} typography-body typography-body--3">{{ block.settings.cta_2_text }}</span>
+                    {%- endif -%}
+                    {%- endif -%}
+
+                    </div>
+
+                {%- if block.settings.cta_independent_placement -%}
+                    <div class="banner-overlay banner-cta-overlay">
+                {%- endif -%}
+
+            {%- endif -%}
+    
+        </div>
+
+    </div>
+
+    </div>
+    
+{%- endfor -%}
+
+</div>
+
+{% schema %}
+
+{
+    "name": "HP Editorial",
+    "tag": "section",
+    "class": "section--hp-editorial",
+    "max_blocks": 2,
+    "templates": ["index"],
+    
+    "settings": [
+
+    ],
+    
+    "blocks": [
+        {
+            "name": "Block",
+            "type": "block",
+            "settings": [
+
+                {
+                    "type": "header",
+                    "content": "Media"
+                },
+
+                {
+                    "type": "radio",
+                    "id": "media_type",
+                    "label": "Media Type",
+                    "options": [
+                        {
+                            "value": "image",
+                            "label": "Image"
+                        },
+                        {
+                            "value": "video",
+                            "label": "Video"
+                        }
+                    ],
+                    "default": "image"
+                },
+                
+                {
+                    "type": "radio",
+                    "id": "media_size",
+                    "label": "Media Size",
+                    "options": [
+                        {
+                            "value": "media-natural-size",
+                            "label": "Media Natural Size"
+                        },
+                        {
+                            "value": "meida-window-height",
+                            "label": "Media Window Height"
+                        }
+                    ],
+                    "default": "media-natural-size"
+                },
+
+                {
+                    "type": "image_picker",
+                    "id": "image",
+                    "label": "Image"
+                },
+
+                {
+                    "type": "image_picker",
+                    "id": "image_alter",
+                    "label": "Image Mobile"
+                },
+
+                {
+                    "type": "video",
+                    "id": "video",
+                    "label": "Video"
+                },
+
+                {
+                    "type": "video",
+                    "id": "video_alter",
+                    "label": "Video Mobile"
+                },
+
+                {
+                    "type": "range",
+                    "id": "overlay_opacity",
+                    "min": 0,
+                    "max": 100,
+                    "step": 1,
+                    "label": "Overlay Opacity",
+                    "default": 0
+                },
+
+                {
+                    "type": "header",
+                    "content": "Text"
+                },
+
+                {
+                    "type": "radio",
+                    "id": "text_placement_hor",
+                    "label": "Text Placement Horizontal",
+                    "options": [
+                        {
+                            "value": "start",
+                            "label": "Left"
+                        },
+                        {
+                            "value": "center",
+                            "label": "Center"
+                        },
+                        {
+                            "value": "end",
+                            "label": "Right"
+                        }
+                    ],
+                    "default": "center"
+                },
+
+                {
+                    "type": "radio",
+                    "id": "text_placement_vert",
+                    "label": "Text Placement Vertical",
+                    "options": [
+                        {
+                            "value": "start",
+                            "label": "Top"
+                        },
+                        {
+                            "value": "center",
+                            "label": "Center"
+                        },
+                        {
+                            "value": "end",
+                            "label": "Bottom"
+                        }
+                    ],
+                    "default": "center"
+                },
+
+                {
+                    "type": "radio",
+                    "id": "text_alignment",
+                    "label": "Text Alignment",
+                    "options": [
+                        {
+                            "value": "start",
+                            "label": "Left"
+                        },
+                        {
+                            "value": "center",
+                            "label": "Center"
+                        },
+                        {
+                            "value": "end",
+                            "label": "Right"
+                        }
+                    ],
+                    "default": "center"
+                },
+
+                {
+                    "type": "richtext",
+                    "id": "title",
+                    "label": "Title",
+                    "info": "Use CMD+U or CTRL+U to underline"
+                },
+
+                {
+                    "type": "color",
+                    "id": "title_color",
+                    "label": "Title Color",
+                    "default": "#ffffff"
+                },
+
+                {
+                    "type": "richtext",
+                    "id": "subtitle",
+                    "label": "Subtitle",
+                    "info": "Use CMD+U or CTRL+U to underline"
+                },
+
+                {
+                    "type": "color",
+                    "id": "subtitle_color",
+                    "label": "Subtitle Color",
+                    "default": "#ffffff"
+                },
+
+                {
+                    "type": "richtext",
+                    "id": "paragraph",
+                    "label": "Paragraph",
+                    "info": "Use CMD+U or CTRL+U to underline"
+                },
+
+                {
+                    "type": "color",
+                    "id": "paragraph_color",
+                    "label": "Paragraph Color",
+                    "default": "#ffffff"
+                },
+
+                {
+                    "type": "text",
+                    "id": "cta_1_text",
+                    "label": "CTA 1 Text"
+                },
+
+                {
+                    "type": "radio",
+                    "id": "cta_1_color",
+                    "label": "CTA 1 Color",
+                    "options": [
+                        {
+                            "value": "light",
+                            "label": "Light"
+                        },
+                        {
+                            "value": "dark",
+                            "label": "Dark"
+                        }
+                    ],
+                    "default": "light"
+                },
+
+                {
+                    "type": "url",
+                    "id": "cta_1_link",
+                    "label": "CTA 1 Link"
+                },
+
+                {
+                    "type": "text",
+                    "id": "cta_2_text",
+                    "label": "CTA 2 Text"
+                },
+
+                {
+                    "type": "radio",
+                    "id": "cta_2_color",
+                    "label": "CTA 2 Color",
+                    "options": [
+                        {
+                            "value": "light",
+                            "label": "Light"
+                        },
+                        {
+                            "value": "dark",
+                            "label": "Dark"
+                        }
+                    ],
+                    "default": "light"
+                },
+
+                {
+                    "type": "url",
+                    "id": "cta_2_link",
+                    "label": "CTA 2 Link"
+                },
+                
+                {
+                    "type": "checkbox",
+                    "id": "cta_independent_placement",
+                    "label": "CTA Independent Placement",
+                    "default": false
+                },
+ 
+                {
+                    "type": "radio",
+                    "id": "cta_placement_hor",
+                    "label": "CTA Placement Horizontal",
+                    "options": [
+                        {
+                            "value": "start",
+                            "label": "Left"
+                        },
+                        {
+                            "value": "center",
+                            "label": "Center"
+                        },
+                        {
+                            "value": "end",
+                            "label": "Right"
+                        }
+                    ],
+                    "default": "end"
+                },
+
+                {
+                    "type": "radio",
+                    "id": "cta_placement_vert",
+                    "label": "CTA Placement Vertical",
+                    "options": [
+                        {
+                            "value": "start",
+                            "label": "Top"
+                        },
+                        {
+                            "value": "center",
+                            "label": "Center"
+                        },
+                        {
+                            "value": "end",
+                            "label": "Bottom"
+                        }
+                    ],
+                    "default": "end"
+                }         
+
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "name": "HP Editorial"
+        }
+    ]
+}
+
+
+{% endschema %}

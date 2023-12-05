@@ -1,0 +1,68 @@
+<div class="product-card">
+
+    <div class="product-card-top">
+
+        <div class="product-card-album">
+
+            <div class="ratio ratio--1-1">
+
+                {% if card_product.images.size > 1 %}
+                <!-- second image -->
+                <img srcset="{% render 'image-srcset', image: card_product.images[1] %}" sizes="50vw"
+                    width="{{ card_product.images[1].width }}"
+                    height="{{ card_product.images[1].width | divided_by: card_product.images[1].aspect_ratio | ceil }}"
+                    src="{{ card_product.images[1] | image_url: width: 2048 }}" loading="lazy"
+                    alt="{{ card_product.images[1].alt | escape }}" class="product-card-image media">
+                {% endif %}
+
+                <!-- first image -->
+                <img srcset="{% render 'image-srcset', image: card_product.images[0] %}" sizes="50vw"
+                    width="{{ card_product.images[0].width }}"
+                    height="{{ card_product.images[0].width | divided_by: card_product.images[0].aspect_ratio | ceil }}"
+                    src="{{ card_product.images[0] | image_url: width: 2048 }}" loading="lazy"
+                    alt="{{ card_product.images[0].alt | escape }}" class="product-card-image media">
+            </div>
+
+        </div>
+
+        <a class="link link--covering" href="{{ collection_url }}{{ card_product.first_available_variant.url }}" aria-hidden="true" tabindex="-1">&nbsp;</a>
+            
+    </div>
+
+    <div class="product-card-bottom">
+
+        <div class="product-card-info">
+            
+            <div class="product-card-info-line">
+
+                <div class="product-card-heading">
+
+                    {%- if card_product.type != blank -%}
+                    <h3 class="product-card-title typography-body typography-body--2">{{ card_product.type }}</h3>
+                    {%- endif -%}
+
+                    <h4 class="product-card-subtitle typography-body typography-body--6 typography-body--6-italic">{{ card_product.title }}</h4>
+
+                </div>
+
+                <div class="product-card-price-line">
+                    {%- if card_product.metafields.accentuate.option_title_value -%}
+                    <div class="product-card-option typography-body typography-body--2">{{ card_product.metafields.accentuate.option_title_value }}</div>
+                    <span>&nbsp;/&nbsp;</span>
+                    {%- endif -%}
+                    <div class="product-card-price typography-body typography-body--2">
+                        {%- render 'price', product: card_product -%}
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+</div>
+
+

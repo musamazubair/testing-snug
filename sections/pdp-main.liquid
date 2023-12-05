@@ -1,0 +1,1025 @@
+<section id="MainProduct-{{ section.id }}" data-section="{{ section.id }}">
+
+    {{ 'template-product.css' | asset_url | stylesheet_tag }}
+
+    <div class="pdp-main">
+
+        <!-- Product Media Gallery -->
+
+        <product-media-collage
+        id="product-media-collage-{{ section.id }}"
+        class="product-media-collage product-media-collage-{{ section.id }} isolate hidden-mobile"
+        role="region"
+        aria-label="Product media collage"
+        >
+
+        <div class="product-media-collage-tile-list">
+
+        {%- assign product_meida_counter = 0 -%}
+        
+        {%- assign selected_or_first_available_variant_title_list = product.selected_or_first_available_variant.title | split: ' / ' -%}
+        
+        {%- for media in product.media -%}
+
+        {%- assign media_alt_list = media.alt | split: ' / ' -%}
+
+        {%- assign is_media_alt_matched = true -%}
+        {%- for media_alt_item in media_alt_list -%}
+            {%- unless selected_or_first_available_variant_title_list contains media_alt_item -%}
+            {%- assign is_media_alt_matched = false -%}
+            {%- break -%}
+            {%- endunless -%}
+        {%- endfor -%}
+
+        {%- assign is_media_active = false -%}
+        {%- if media.alt == blank or media.alt == product.title or is_media_alt_matched -%}
+        {%- assign is_media_active = true -%}
+        {%- endif -%}
+
+        <div
+        class="product-media-collage-tile product-media-collage-tile-{{ section.id }}-{{ media.id }} {% unless is_media_active %} hidden{% endunless %}"
+        data-variant-media="{% if media.alt == blank or media.alt == product.title %}false{% else %}true{% endif %}" 
+        data-media-alt="{{ media.alt | escape }}"
+        >
+
+            <modal-opener class="product-zoom-slider-modal-opener modal-opener" data-modal="#product-zoom-slider-modal-{{ section.id }}">
+
+                {% case media.media_type %}
+        
+                {% when 'image' %}
+        
+                <img
+                srcset="{% render 'image-srcset', image: media %}"
+                sizes="50vw"
+                src="{{ media | image_url: width: 2048 }}"
+                loading="eager"
+                alt="{{ media.alt | escape }}"
+                width="{{ media.width }}"
+                height="{{ media.width | divided_by: media.aspect_ratio | ceil }}"
+                class="media"
+                >
+        
+                {% when 'video' %}
+
+                {{ media | video_tag: class: "media", muted: true, autoplay: true, loop: true, controls: false, preload: true }}
+
+                {% when 'external_video' %}
+        
+                {{ media | external_video_url: muted: "1", autoplay: "1", loop: "1" | external_video_tag: class: "media", loading: "lazy" }}
+        
+                {% endcase %}
+
+                <button class="covering-button cursor--zoom-in" type="button" aria-haspopup="dialog" data-media-index="{% if is_media_active %}{{ product_meida_counter }}{% else %}0{% endif %}">
+                    <span class="visually-hidden">
+                        Open media {{ forloop.index }} in slider modal
+                    </span>
+                </button>
+
+                {%- if is_media_active -%}
+                {%- assign product_meida_counter = product_meida_counter | plus: 1 -%}
+                {%- endif -%}
+
+            </modal-opener>
+
+        </div>
+        
+        {%- endfor -%}
+
+        </div>
+
+        </product-media-collage>
+
+        <!-- Product Media Slider -->
+
+        <product-media-slider
+        id="product-media-slider-{{ section.id }}"
+        class="product-media-slider product-media-slider-{{ section.id }} swiper isolate hidden-desktop"
+        role="region"
+        aria-label="Product media slider"
+        >
+
+            <div class="swiper-wrapper"></div>
+
+            <div class="swiper-pagination swiper-pagination--line"></div>
+
+            <template>
+
+            {%- for media in product.media -%}
+
+            <div
+            class="product-media-slide product-media-slide-{{ section.id }}-{{ media.id }} swiper-slide"
+            data-variant-media="{% if media.alt == blank or media.alt == product.title %}false{% else %}true{% endif %}" 
+            data-media-alt="{{ media.alt | escape }}"
+            >
+                
+                <modal-opener class="product-zoom-slider-modal-opener modal-opener" data-modal="#product-zoom-slider-modal-{{ section.id }}">
+
+                    {% case media.media_type %}
+                    
+                    {% when 'image' %}
+
+                    <div class="ratio ratio--1-1">
+
+                    <img
+                    srcset="{% render 'image-srcset', image: media %}"
+                    sizes="100vw"
+                    src="{{ media | image_url: width: 2048 }}"
+                    loading="lazy"
+                    alt="{{ media.alt | escape }}"
+                    width="{{ media.width }}"
+                    height="{{ media.width | divided_by: media.aspect_ratio | ceil }}"
+                    class="media"
+                    >
+
+                    </div>
+
+                    {% when 'video' %}
+
+                    <div class="ratio ratio--1-1">
+                    {{ media | video_tag: class: "media", muted: true, autoplay: false, loop: true, controls: false, preload: true }}
+                    </div>
+
+                    {% when 'external_video' %}
+
+                    <div class="ratio ratio--1-1">
+                    {{ media | external_video_url: muted: "1", autoplay: "0", loop: "1" | external_video_tag: class: "media", loading: "lazy" }}
+                    </div>
+    
+                    {% endcase %}
+
+                    <button class="covering-button" type="button" aria-haspopup="dialog" data-media-index="{{ forloop.index0 }}">
+                        <span class="visually-hidden">
+                            Open media {{ forloop.index }} in slider modal
+                        </span>
+                    </button>
+    
+                </modal-opener>
+
+            </div>
+
+            {%- endfor -%}
+
+            </template>
+
+            <script type="application/json">
+                {{ product.selected_or_first_available_variant | json }}
+            </script>
+
+        </product-media-slider>
+
+
+        <!-- Product Info -->
+    
+        <div class="pdp-info">
+        <div id="pdp-info-anchor-target" class="anchor-target pdp-info-anchor-target" aria-hidden="true"></div>
+        <div id="pdp-info-inner" class="pdp-info-inner">
+
+            <!-- Breadcrumbs -->
+
+            {%- if collection or product.metafields.accentuate.family_collection -%}
+            <div class="product-breadcrumbs typography-heading typography-heading--6">
+                <a href="{{ routes.root_url }}" class="product-breadcrumbs-item link link--block link--hover">Home</a>
+
+                <span class="product-breadcrumbs-item product-breadcrumbs-item--delimiter">/</span>
+
+                {%- if collection -%}
+                <a href="{{ collection.url }}" class="product-breadcrumbs-item link link--block link--hover">{{ collection.title | escape }}</a>
+                {%- else -%}
+                <a href="{{ product.metafields.accentuate.family_collection.value.url }}" class="product-breadcrumbs-item link link--block link--hover">{{ product.metafields.accentuate.family_collection.value.title | escape }}</a>
+                {%- endif -%}
+            </div>
+            {%- endif -%}
+
+            <!-- Title -->
+
+            {%- if product.metafields.accentuate.family_collection -%}
+            <h2 class="product-title--family product-title typography-heading typography-heading--5">
+                <a href="{{ product.metafields.accentuate.family_collection.value.url }}" class="link link--block link--hover">
+                   {%- if product.metafields.accentuate.family_title -%}
+                    {{ product.metafields.accentuate.family_title | escape }}
+                   {%- else -%}
+                    {{ product.metafields.accentuate.family_collection.value.title | escape }}
+                   {%- endif -%}
+                </a>
+            </h2>
+            {%- endif -%}
+    
+            <h1 class="product-title--main product-title typography-heading typography-heading--2">
+                {{ product.title | escape }}
+            </h1>
+
+            <!-- Price -->
+
+            <div id="product-price-line-{{ section.id }}" class="product-price-line" role="status">
+    
+                <div class="product-main-price typography-heading">
+                    {%- render 'price', product: product -%}
+                </div>
+    
+                <klarna-placement
+                id="product-main-klarna"
+                class="product-main-klarna"
+                data-key="credit-promotion-auto-size"
+                data-locale="en-US"
+                data-message-prefix="or"
+                data-purchase-amount="{{ product.selected_or_first_available_variant.price }}"
+                ></klarna-placement>
+
+            </div>
+
+            <!-- Description -->
+
+            <div class="product-description typography-body typography-body--1">
+                {{ product.description }}
+            </div>
+    
+            <!-- Form -->
+    
+            <product-form class="product-form" data-cart-type="drawer">
+
+                {%- assign product_form_id = 'product-form-' | append: section.id -%}
+                
+                {%- form 'product', product, id: product_form_id, class: 'form', novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
+
+                    <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}" disabled>
+                    <input type="number" name="quantity" value="1" form="{{ product_form_id }}" readonly tabindex="-1" hidden>
+
+                    <!-- Option Product Selector -->
+
+                    {%- assign option_product_list = product.metafields.accentuate.option_product.value -%}
+
+                    {%- if option_product_list.count > 0 -%}
+                                
+                    <product-color-swatches
+                    id="product-color-swatches-{{ section.id }}"
+                    class="product-color-swatches"
+                    data-section="{{ section.id }}"
+                    >
+
+                        <fieldset class="product-form-option">
+
+                            <legend class="product-form-option-title typography-heading typography-heading--5">
+                                {{ product.metafields.accentuate.option_title }}: {{ product.metafields.accentuate.option_title_value }}
+                            </legend>
+
+                            <ul class="product-color-swatch-list product-form-option-value-list" role="list">
+
+                            {%- assign default_variant_title = product.selected_or_first_available_variant.title -%}
+                                
+                            {%- for option_product in option_product_list -%}
+
+                                {% comment %}
+
+                                    Find default variant of option product
+
+                                {% endcomment %}
+                                
+                                {% comment %}
+                                    - first available variant
+                                {% endcomment %}
+                                {%- assign option_product_default_variant = option_product.first_available_variant -%}
+
+                                {% comment %}
+                                    - specific variant managed in metafield
+                                {% endcomment %}
+                                {%- if option_product.metafields.accentuate.default_variant -%}
+                                    {%- assign option_product_default_variant_id = option_product.metafields.accentuate.default_variant | split: ':' | last | plus: 0 -%}
+                                    {%- assign option_product_default_variant = option_product.variants | where: "id", option_product_default_variant_id | first -%}
+                                {%- endif -%}
+                                
+                                {% comment %}
+                                    - the varaint with the same option as the current product
+                                {% endcomment %}
+                                {%- for option_product_variant in option_product.variants -%}
+                                    {%- if option_product_variant.title == default_variant_title -%}
+                                        {%- assign option_product_default_variant = option_product_variant -%}
+                                        {%- break -%}
+                                    {%- endif -%}
+                                {%- endfor -%}
+
+                                <li class="product-color-swatch product-form-option-value">
+
+                                    <a href="{{ option_product_default_variant.url | within: collection }}" class="product-form-color-swatch link link--block {% if option_product.handle == product.handle %} selected{% endif %}" data-color-swatch="{{ option_product.metafields.accentuate.option_title_value | handle }}" >
+                                        <span class="visually-hidden">{{ option_product.metafields.accentuate.option_title_value }}</span>
+                                    </a>
+
+                                    <script type="application/json">
+                                    {{ option_product.variants | json }}
+                                    </script>
+
+                                </li>
+
+                            {%- endfor -%}
+
+                            </ul>
+
+                        </fieldset>
+
+                    </product-color-swatches>
+
+                    {%- endif -%}
+
+                    <!-- Variant Selector -->
+    
+                    {%- unless product.has_only_default_variant -%}
+    
+                    <variant-radios
+                    class="product-variant-radios"
+                    data-section="{{ section.id }}"
+                    data-url="{{ product.url }}"
+                    >
+
+                    <div class="product-form-option-list">
+
+                        {%- for option in product.options_with_values -%}
+
+                            {%- assign option_name_handle = option.name | handle -%}
+                            {%- assign option_values_size = option.values.size -%}
+
+                            <fieldset class="product-form-option">
+
+                                <legend class="product-form-option-title typography-heading typography-heading--5">
+                                    {{ option.name }}: <span>{{ option.selected_value }}</span>
+                                </legend>
+
+                                <ul class="product-form-option-value-list" role="list">
+                                    
+                                {%- assign option_values = option.values -%}
+                                
+                                {%- for value in option_values -%}
+
+                                <li
+                                class="product-form-option-value {% if option_name_handle == "option" %} field--radio{% endif %}"
+                                {%- if option_name_handle contains "weight" -%}data-sort="{{ value | remove_last: ' CT' }}"{%- elsif option_name_handle contains "length" -%}data-sort="{{ value | remove_last: ' IN' }}"{%- endif -%}
+                                >
+
+                                    <input
+                                    type="radio"
+                                    id="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
+                                    name="{{ option.name }}"
+                                    value="{{ value | escape }}"
+                                    form="{{ product_form_id }}"
+                                    {% if option.selected_value == value %}
+                                        checked
+                                    {% endif %}
+                                    >
+
+                                    <label for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}" class="typography-heading typography-heading--5" {% if option_name_handle contains "shape" %}data-diamond-shape="{{ value | handle }}"{% endif %}>
+                                        {%- if option_name_handle contains "shape" -%}
+                                            <span class="visually-hidden">{{ value }}</span>
+                                        {%- elsif option_name_handle contains "weight" -%}
+                                            {{ value | remove_last: ' CT' }}
+                                        {%- elsif option_name_handle contains "length" -%}
+                                            {{ value | remove_last: ' IN' }}
+                                        {%- else -%}
+                                            {{ value }}
+                                        {%- endif -%}
+                                    </label>
+
+                                </li>
+
+                                {%- endfor -%}
+
+                                </ul>
+
+                            </fieldset>
+
+                        {%- endfor -%}
+
+                        <script type="application/json">
+                            {{ product.variants | json }}
+                        </script>
+
+                    </div>
+
+                    </variant-radios>
+
+                    <!-- Variant Properties -->
+
+                    {%- assign variant_property_name_list = product.selected_or_first_available_variant.metafields.accentuate.property_name -%}
+                    {%- assign variant_property_value_list = product.selected_or_first_available_variant.metafields.accentuate.property_value -%}
+
+                    {%- if variant_property_name_list.size != 0 and variant_property_value_list != 0 -%}
+                    <div
+                    id="product-variant-properties-{{ section.id }}"
+                    class="product-variant-properties"
+                    role="status"
+                    >
+                        <ul class="product-variant-property-list" role="list">
+                            {%- for variant_property_name in variant_property_name_list -%}
+                            {%- assign variant_property_value = variant_property_value_list[forloop.index0] -%}
+                            <li class="product-variant-property">
+                                <p class="product-variant-property-line typography-heading typography-heading--5">
+                                    {{ variant_property_name }}: <span>{{ variant_property_value }}</span>
+                                </p>
+                            </li>
+                           
+                            {%- endfor -%}
+                        </ul>
+                    </div>
+                    {%- endif -%}
+                    
+                    {%- endunless -%}
+
+
+                    <div class="product-cta-line">
+
+                        <!-- Accordion -->
+
+                        {%- assign accordion_title_list = product.metafields.accentuate.accordion_title -%}
+                        {%- assign accordion_content_list = product.metafields.accentuate.accordion_content -%}
+                
+                        {%- if accordion_title_list.size != 0 and accordion_content_list != 0 -%}
+
+                        <modal-opener class="product-accordion-modal-opener modal-opener" data-modal="#product-accordion-modal-{{ section.id }}">
+                            <button class="unstyled-button link link--hover link--underline typography-heading typography-heading--5" type="button" aria-haspopup="dialog">Product Details</button>
+                        </modal-opener>
+        
+                        {%- endif -%}
+
+
+                        <!-- Contact -->
+
+                        <modal-opener class="product-contact-modal-opener modal-opener" data-modal="#product-contact-modal-{{ section.id }}">
+                            <button class="unstyled-button link link--hover link--underline typography-heading typography-heading--5" type="button" aria-haspopup="dialog">Message Concierge</button>
+                        </modal-opener>
+                    
+                    </div>
+
+                    <!-- Notice Message -->
+                    
+                    <div
+                    id="product-notice-message-{{ section.id }}"
+                    class="product-notice-message typography-heading typography-heading--6"
+                    role="status"
+                    >
+                    {%- render 'product-shipping-message' -%}
+                    </div> 
+
+                    <!-- Floaty -->
+
+                    <div id="scroll-trigger--product-floaty" aria-hidden="true"></div>
+
+                    <div id="product-floaty-{{ section.id }}" class="product-floaty">
+
+                        <!-- Buy Button List -->
+
+                        <div class="product-form-button-list product-floaty-button-list">
+                            <button
+                            type="submit"
+                            name="add"
+                            data-product-data="{{ product | json | escape }}"
+                            class="product-form-submit product-floaty-submit button button--secondary typography-heading typography-heading--5 {% if product.selected_or_first_available_variant.available == false %}BIS_trigger{% endif %}"
+                            {% if product.selected_or_first_available_variant.available == false %}
+                              disabled
+                            {% endif %}
+                            >
+                                <span class="product-form-submit-text">
+                                    {%- if product.selected_or_first_available_variant.available -%}
+                                    Add to bag
+                                    {%- else -%}
+                                    Sold out
+                                    {%- endif -%}
+                                </span>
+                                
+                                <span id="product-floaty-price-{{ section.id }}" class="product-floaty-price" role="status">
+                                    {%- render 'price', product: product -%}
+                                </span>
+    
+                                <div class="loading-overlay__spinner hidden">
+                                    <svg aria-hidden="true" focusable="false" role="presentation" class="spinner" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+                                    <circle class="path" fill="none" stroke-width="6" cx="33" cy="33" r="30"></circle>
+                                    </svg>
+                                </div>
+                            </button>
+    
+                            {% comment %}
+                            {{ form | payment_button }}
+                            {% endcomment %}
+                        </div>
+
+                        {%- if option_product_list.count > 0 or product.has_only_default_variant == false -%}
+
+                        <div class="product-floaty-line">
+                            <p class="product-floaty-info typography-heading typography-heading--6">
+                                <span>Selected:&nbsp;</span>
+                                <span>
+                                {%- if option_product_list.count > 0 -%}
+                                {{- product.metafields.accentuate.option_title_value -}}
+                                {%- endif -%}
+                                {%- if option_product_list.count > 0 and product.has_only_default_variant == false -%}
+                                ,&nbsp;
+                                {%- endif -%}
+                                {%- if product.has_only_default_variant == false -%}
+                                {{- product.selected_or_first_available_variant.options | join: ",&nbsp;" -}}
+                                {%- endif -%}
+                                </span>
+                            </p>
+                            <a href="#pdp-info-anchor-target" class="product-floaty-cta link link--underline link--hover typography-heading typography-heading--5">Change</a>
+                        </div>
+
+                        {%- endif -%}
+
+                    </div>
+
+                    <!-- Review -->
+
+                    <modal-opener class="product-review-modal-opener modal-opener" data-modal="#product-review-modal-{{ section.id }}">
+                        <button class="unstyled-button typography-heading typography-heading--5" type="button" aria-haspopup="dialog">
+                            {% render 'yotpo-reviews', yotpo_widget: 'pdp_star_rating' %}
+                        </button>
+                    </modal-opener>
+
+                    <modal-dialog id="product-review-modal-{{ section.id }}" class="product-review-modal-{{ section.id }} product-review-modal modal">
+
+                        <div class="modal-dialog modal-dialog--animation" role="dialog" aria-label="Product accordion" aria-modal="true" tabindex="-1">
+                            <div class="modal-dialog-inner">
+                            <div class="modal-header">
+                                <h3 class="modal-title typography-heading typography-heading--5">Product Reviews</h3>
+                                <button id="ModalClose-product-review" type="button" class="modal-close button button--icon-only" aria-label="Close">
+                                    {% render 'icon-close' %}
+                                </button>
+                            </div>
+
+                            <div class="modal-content">
+                                {% render 'yotpo-reviews', yotpo_widget: 'reviews' %}
+                            </div>
+                            </div>
+
+                        </div>
+                    </modal-dialog>
+
+                    <!-- Error Message -->
+
+                    <div class="product-form-error-message-wrapper typography-heading typography-heading--8" role="alert" hidden>
+                        <span class="product-form-error-message"></span>
+                    </div>
+    
+                {%- endform -%}
+                
+            </product-form>
+        
+    
+        </div>
+        </div>
+        <!-- end of pdp-info -->
+
+    
+    </div>
+    <!-- end of pdp-main -->
+
+    <!-- Product Zoom Slider Modal -->
+
+    <product-slider-modal
+    id="product-zoom-slider-modal-{{ section.id }}"
+    class="product-zoom-slider-modal-{{ section.id }} product-zoom-slider-modal modal"
+    >
+        <div class="modal-dialog" role="dialog" aria-label="Product Zoom Slider" aria-modal="true" tabindex="-1">
+
+            <button type="button" id="ModalClose-zoom" class="button button--icon-only modal-close" aria-label="Close">
+                {% render 'icon-close' %}
+            </button>
+        
+            <div class="modal-content" role="document">
+
+                <div
+                id="product-zoom-slider-{{ section.id }}"
+                class="product-zoom-slider product-zoom-slider-{{ section.id }} swiper isolate"
+                role="region"
+                aria-label="Product zoom slider"
+                >
+
+                    <div class="swiper-wrapper"></div>
+
+                    <button
+                    class="swiper-nav-button swiper-nav-button--prev" 
+                    type="button"
+                    name="previous"
+                    aria-label="Previous slide"
+                    aria-controls="product-zoom-slider-{{ section.id }}"
+                    >
+                        {% render 'icon-arrow_left' %}
+                    </button>
+
+                    <button
+                    class="swiper-nav-button swiper-nav-button--next" 
+                    type="button"
+                    name="next"
+                    aria-label="Next slide"
+                    aria-controls="product-zoom-slider-{{ section.id }}"
+                    >
+                        {% render 'icon-arrow_right' %}
+                    </button>
+
+                    <div class="swiper-pagination swiper-pagination--fraction typography-heading typography-heading--5"></div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <template>
+
+        {%- for media in product.media -%}
+
+        <div
+        class="product-zoom-slide product-zoom-slide-{{ section.id }}-{{ media.id }} swiper-slide"
+        data-variant-media="{% if media.alt == blank or media.alt == product.title %}false{% else %}true{% endif %}" 
+        data-media-alt="{{ media.alt | escape }}"
+        >
+            
+            {% case media.media_type %}
+            
+                {% when 'image' %}
+
+                <modal-opener class="product-zoom-modal-opener modal-opener" data-modal="#product-zoom-modal-{{ section.id }}">
+
+                <img
+                src="{{ media | image_url: width: 2048 }}"
+                loading="lazy"
+                alt="{{ media.alt | escape }}"
+                width="{{ media.width }}"
+                height="{{ media.width | divided_by: media.aspect_ratio | ceil }}"
+                class="media"
+                >
+
+                <button class="covering-button cursor--zoom-in" type="button" aria-haspopup="dialog" data-media-id="{{ media.id }}">
+                    <span class="visually-hidden">
+                        Open media {{ forloop.index }} in modal
+                    </span>
+                </button>
+    
+                </modal-opener>
+
+                {% when 'video' %}
+
+                {{ media | video_tag: class: "media", muted: true, autoplay: false, loop: true, controls: false, preload: true }}
+
+                {% when 'external_video' %}
+
+                {{ media | external_video_url: muted: "1", autoplay: "0", loop: "1" | external_video_tag: class: "media", loading: "lazy" }}
+
+            {% endcase %}
+
+        </div>
+        
+        {%- endfor -%}
+
+        </template>
+
+        <script type="application/json">
+            {{ product.selected_or_first_available_variant | json }}
+        </script>
+
+    </product-slider-modal>
+
+    <!-- Product Zoom Modal -->
+
+    <product-modal
+    id="product-zoom-modal-{{ section.id }}"
+    class="product-zoom-modal-{{ section.id }} product-zoom-modal media-modal modal"
+    >
+        <div class="modal-dialog" role="dialog" aria-label="Product Zoom" aria-modal="true" tabindex="-1">
+
+            <button type="button" id="ModalClose-zoom" class="button button--icon-only modal-close" aria-label="Close">
+                {% render 'icon-close' %}
+            </button>
+        
+            <div class="modal-content cursor--zoom-out" role="document">
+
+                <div class="product-zoom-media-list">
+                
+                {% assign media_images = product.media | where: "media_type", "image" %}
+
+                {%- for media in media_images -%}
+
+                    <img
+                    srcset="{% render 'image-srcset', image: media %}"
+                    sizes="100vw"
+                    src="{{ media | image_url: width: 2048 }}"
+                    loading="lazy"
+                    alt="{{ media.alt | escape }}"
+                    width="{{ media.width }}"
+                    height="{{ media.width | divided_by: media.aspect_ratio | ceil }}"
+                    class="media"
+                    data-media-id="{{ media.id }}"
+                    >
+
+                {%- endfor -%}
+
+                </div>
+
+            </div>
+
+        </div>
+    </product-modal>
+
+    {%- if accordion_title_list.size != 0 and accordion_content_list != 0 -%}
+    <modal-dialog id="product-accordion-modal-{{ section.id }}" class="product-accordion-modal-{{ section.id }} product-accordion-modal modal">
+        
+    <div class="modal-dialog modal-dialog--animation" role="dialog" aria-label="Product accordion" aria-modal="true" tabindex="-1">
+        <div class="modal-dialog-inner">
+        <div class="modal-header">
+            <h3 class="modal-title typography-heading typography-heading--5">Product Details</h3>
+            <button id="ModalClose-product-accordion" type="button" class="modal-close button button--icon-only" aria-label="Close">
+                {% render 'icon-close' %}
+            </button>
+        </div>
+
+        <div class="modal-content">
+            <div class="product-accordion-group accordion-group">
+
+                {%- for accordion_title in accordion_title_list -%}
+
+                {%- assign accordion_content = accordion_content_list[forloop.index0] -%}
+
+                {%- if accordion_title != blank -%}
+
+                    {%- if accordion_content != blank -%}
+
+                    <details class="product-accordion--full product-accordion accordion">
+                        <!-- Accordion title -->
+                        <summary class="accordion-title typography-heading typography-heading--5">
+                            <span>{{ accordion_title }}</span>
+                            {% render 'icon-plus' %}
+                            {% render 'icon-minus' %}
+                        </summary>
+                        <div class="accordion-content typography-body typography-body--1">
+                            <!-- Accordion content -->
+                            {%- if accordion_content -%}
+                            <div class="rich-text">{{ accordion_content }}</div>
+                            {%- endif -%}
+                        </div>
+                    </details>
+
+                    {%- endif -%}
+
+                {%- else -%}
+
+                    {%- if accordion_content != blank -%}
+                    <div class="product-accordion--lite product-accordion">
+                        {{ accordion_content }}
+                    </div>
+
+                    {%- endif -%}
+
+                {%- endif -%}
+
+                {%- endfor -%}
+
+                <div id="product-variant-sku-{{ section.id }}" class="product-variant-sku product-accordion--sku product-accordion--lite product-accordion">
+                    <p><span>Style:&nbsp;</span><span>{{ product.selected_or_first_available_variant.sku }}</span></p>
+                </div>
+
+            </div>
+        </div>
+        </div>
+
+    </div>
+    </modal-dialog>
+    {%- endif -%}
+
+    <modal-dialog id="product-contact-modal-{{ section.id }}" class="product-contact-modal-{{ section.id }} product-contact-modal modal">
+        
+    <div class="modal-dialog modal-dialog--animation" role="dialog" aria-label="Product contact" aria-modal="true" tabindex="-1">
+        <div class="modal-dialog-inner">
+        <div class="modal-header">
+            <h3 class="modal-title typography-heading typography-heading--5">Message Concierge</h3>
+            <button id="ModalClose-product-contact" type="button" class="modal-close button button--icon-only" aria-label="Close">
+                {% render 'icon-close' %}
+            </button>
+        </div>
+
+        <div class="modal-content">
+
+        <form
+        id="product-contact-form"
+        class="product-contact-form"
+        action="//jevarco.freshdesk.com/api/v2/tickets"
+        tabindex="0"
+        >
+            <p class="product-contact-form-message">Fill out this form and we will get back to you within 1 business day.</p>
+
+            <input type="hidden" name="priority" value="1">
+            <input type="hidden" name="status" value="2">
+            <input type="hidden" name="custom_fields[cf_product_handle]" value="{{ product.handle }}">
+            <input type="hidden" name="custom_fields[cf_product_url]" value="{{ request.origin }}{{ product.url | within: collection }}">
+
+            <div class="field field--input typography-text typography-text--fields">        
+                <input
+                    type="text"
+                    name="custom_fields[cf_name]"
+                    id="product-contact-form-name"
+                    required
+                    autocomplete="off"
+                    autocorrect="off"
+                    autocapitalize="off"
+                    placeholder="*Name"
+                    class="typography-heading typography-heading--5"
+                >
+                <label for="product-contact-form-name" class="visually-hidden">Name</label>
+            </div>
+
+            <div class="field field--input typography-text typography-text--fields">        
+                <input
+                    type="email"
+                    name="email"
+                    id="product-contact-form-email"
+                    required
+                    autocomplete="email"
+                    autocorrect="off"
+                    autocapitalize="off"
+                    placeholder="*Email"
+                    class="typography-heading typography-heading--5"
+                >
+                <label for="product-contact-form-email" class="visually-hidden">Email</label>
+            </div>
+
+            <div class="field field--input typography-text typography-text--fields">        
+                <input
+                    type="tel"
+                    name="custom_fields[cf_phone]"
+                    id="product-contact-form-phone"
+                    pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+                    autocomplete="tel"
+                    autocorrect="off"
+                    autocapitalize="off"
+                    placeholder="Phone"
+                    class="typography-heading typography-heading--5"
+                >
+                <label for="product-contact-form-phone" class="visually-hidden">Phone</label>
+            </div>
+
+            <div class="field field--input typography-text typography-text--fields">        
+                <input
+                    type="text"
+                    name="subject"
+                    id="product-contact-form-subject"
+                    required
+                    autocomplete="off"
+                    autocorrect="off"
+                    autocapitalize="off"
+                    placeholder="*Subject"
+                    class="typography-heading typography-heading--5"
+                >
+                <label for="product-contact-form-subject" class="visually-hidden">Subject</label>
+            </div>
+            
+            <div class="field field--input typography-text typography-text--fields">        
+                <textarea
+                    name="description"
+                    id="product-contact-form-description"
+                    required
+                    rows="10"
+                    autocorrect="off"
+                    autocapitalize="off"
+                    placeholder="*Message"
+                    class="typography-heading typography-heading--5"
+                ></textarea>
+                <label for="product-contact-form-description" class="visually-hidden">Message</label>
+            </div>
+
+            <button
+            type="submit"
+            name="submit"
+            form="product-contact-form"
+            class="product-contact-form-submit button button--primary typography-heading typography-heading--5"
+            >Submit</button>
+            
+        </form>
+
+        <div
+        id="product-contact-success-message"
+        class="product-contact-success-message typography-heading typography-heading--4"
+        >
+            Thank you for your feedback.
+        </div>
+
+        </div>
+        </div>
+
+    </div>
+    </modal-dialog>
+
+
+</section>
+    
+
+
+
+    
+{%- style -%}
+
+{%- endstyle -%}
+    
+    
+{% javascript %}
+
+
+document.querySelector("#product-contact-form").addEventListener("submit", function (event) {
+    event.preventDefault();
+    const form = event.currentTarget;
+    const formSuccessMsg = document.querySelector("#product-contact-success-message")
+    const formURL = form.action;
+    const formHeaders = new Headers();
+    formHeaders.append("Authorization", "SGdTSXllSGxCR2syQjM2c3dqZA==");
+    formHeaders.append("id", "HgSIyeHlBGk2B36swjd");
+    const formData = new FormData(form);
+
+    const requestOptions = {
+        method: 'POST',
+        headers: formHeaders,
+        body: formData
+    };
+
+    fetch(formURL, requestOptions)
+        .then(response => response.text())
+        .then(result => {
+            form.remove();
+            formSuccessMsg.classList.add('active');
+        })
+        .catch(error => console.log('error', error));
+});
+
+
+
+
+if (window.matchMedia('(max-width: 768px)').matches) {
+
+    ScrollTrigger.create({
+        
+        trigger: "#scroll-trigger--product-floaty",
+        endTrigger:"#scroll-trigger--product-floaty",
+        start: 'top bottom',
+        end:"top top",
+        toggleClass: {targets: ".pdp-info .product-floaty", className: "static"}
+
+    });
+
+}
+else{
+
+
+
+}
+
+{% endjavascript %}
+
+    
+{%- liquid
+    if product.selected_or_first_available_variant.featured_media
+        assign seo_media = product.selected_or_first_available_variant.featured_media
+    else
+        assign seo_media = product.featured_media
+    endif
+-%}
+
+<script type="application/ld+json">
+{
+    "@context": "http://schema.org/",
+    "@type": "Product",
+    "name": {{ product.title | json }},
+    "url": {{ request.origin | append: product.url | json }},
+    {% if seo_media -%}
+    "image": [
+        {{ seo_media | image_url: width: seo_media.preview_image.width | prepend: "https:" | json }}
+    ],
+    {%- endif %}
+    "description": {{ product.description | strip_html | json }},
+    {% if product.selected_or_first_available_variant.sku != blank -%}
+    "sku": {{ product.selected_or_first_available_variant.sku | json }},
+    {%- endif %}
+    "brand": {
+    "@type": "Thing",
+    "name": {{ product.vendor | json }}
+    },
+    "offers": [
+    {%- for variant in product.variants -%}
+        {
+        "@type" : "Offer",
+        {%- if variant.sku != blank -%}
+            "sku": {{ variant.sku | json }},
+        {%- endif -%}
+        "availability" : "http://schema.org/{% if variant.available %}InStock{% else %}OutOfStock{% endif %}",
+        "price" : {{ variant.price | divided_by: 100.00 | json }},
+        "priceCurrency" : {{ cart.currency.iso_code | json }},
+        "url" : {{ request.origin | append: variant.url | json }}
+        }{% unless forloop.last %},{% endunless %}
+    {%- endfor -%}
+    ]
+}
+</script>
+
+
+
+{% schema %}
+
+{
+    "name": "PDP Main",
+    "tag": "section",
+    "class": "section--pdp-main",
+    "templates": ["product"]
+}
+
+{% endschema %}

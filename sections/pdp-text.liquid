@@ -1,0 +1,172 @@
+{%- assign text_title = product.metafields.accentuate.text_title -%}
+{%- assign text_subtitle = product.metafields.accentuate.text_subtitle -%}
+{%- assign text_cta = product.metafields.accentuate.text_cta -%}
+{%- assign text_link = product.metafields.accentuate.text_link -%}
+{%- assign text_background_color = product.metafields.accentuate.text_background_color -%}
+{%- assign text_color = product.metafields.accentuate.text_color -%}
+
+
+{% style %}
+
+    .pdp-text-{{ section.id }}{
+
+        {%- if text_color -%}
+        color: {{ text_color }};
+        {%- endif -%}
+
+        {%- if text_background_color -%}
+        background-color: {{ text_background_color }};
+        {%- endif -%}
+
+    }
+
+    .pdp-text-{{ section.id }} > *+*{
+        margin-top: 1.8rem;
+    }
+
+    @media screen and (min-width: 769px) {
+
+        .pdp-text-{{ section.id }}{
+            display: grid;
+            justify-content: {{ section.settings.text_placement_hor }};
+            text-align: {{ section.settings.text_alignment }};
+
+            padding-left: 30px;
+            padding-right: 30px;
+            padding-top: {{ section.settings.padding_top }}px;
+            padding-bottom: {{ section.settings.padding_bottom }}px;
+        }
+
+        .pdp-text-{{ section.id }} .pdp-text-title,
+        .pdp-text-{{ section.id }} .pdp-text-subtitle{
+            max-width: 70rem;
+        }
+
+    }
+
+    @media only screen and (max-width: 768px) {
+
+        .pdp-text-{{ section.id }}{
+            text-align: center;
+            padding-left: 15px;
+            padding-right: 15px;
+            padding-top: {{ section.settings.padding_top | times: 0.5 | round: 0 }}px;
+            padding-bottom: {{ section.settings.padding_bottom | times: 0.5 | round: 0 }}px;
+        }
+
+    }
+
+
+{% endstyle %}
+
+
+{%- if text_title or text_subtitle or text_cta -%}
+
+<div
+id="pdp-text-{{ section.id }}"
+class="pdp-text pdp-text-{{ section.id }} isolate"
+role="region"
+aria-label="Product page text"
+>
+
+    {% if text_title %}
+    <h2 class="pdp-text-title typography-heading typography-heading--2">{{ text_title }}</h2>
+    {% endif %}
+
+    {% if text_subtitle %}
+    <h3 class="pdp-text-subtitle typography-heading typography-heading--5">{{ text_subtitle }}</h3>
+    {% endif %}
+
+    {% if text_cta %}
+
+        {%- if text_link -%}
+            <a href="{{ text_link }}" class="pdp-text-cta link link--cta typography-heading typography-heading--5">
+                {{ text_cta }}
+            </a>
+        {%- else -%}
+            <span class="pdp-text-cta typography-heading typography-heading--5">
+                {{ text_cta }}
+            </span>
+        {%- endif -%}
+
+    {% endif %}
+
+</div>
+
+{%- endif -%}
+
+
+
+{% schema %}
+{
+    "name": "PDP Text",
+    "tag": "section",
+    "class": "section--pdp-text",
+    "templates": ["product"],
+    "settings": [
+
+        {
+            "type": "radio",
+            "id": "text_placement_hor",
+            "label": "Text Placement Horizontal",
+            "options": [
+                {
+                    "value": "start",
+                    "label": "Left"
+                },
+                {
+                    "value": "center",
+                    "label": "Center"
+                },
+                {
+                    "value": "end",
+                    "label": "Right"
+                }
+            ],
+            "default": "center"
+        },
+        {
+            "type": "radio",
+            "id": "text_alignment",
+            "label": "Text Alignment",
+            "options": [
+                {
+                    "value": "left",
+                    "label": "Left"
+                },
+                {
+                    "value": "center",
+                    "label": "Center"
+                },
+                {
+                    "value": "right",
+                    "label": "Right"
+                }
+            ],
+            "default": "center"
+        },
+        {
+            "type": "range",
+            "id": "padding_top",
+            "min": 0,
+            "max": 200,
+            "step": 2,
+            "unit": "px",
+            "label": "Padding Top",
+            "default": 80
+        },
+
+        {
+            "type": "range",
+            "id": "padding_bottom",
+            "min": 0,
+            "max": 200,
+            "step": 2,
+            "unit": "px",
+            "label": "Padding bottom",
+            "default": 80
+        }
+    ]
+}
+
+{% endschema %}

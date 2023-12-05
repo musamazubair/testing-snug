@@ -1,0 +1,70 @@
+<script>
+    window.dataLayer = window.dataLayer || [];
+
+
+{% if customer %}
+    window.dataLayer.push({
+        visitorType: "Logged In",
+        visitorId: "{{ customer.id | remove: "'" }}",
+        CustomerId: "{{ customer.id | remove: "'" }}",
+        CustomerEmail: "{{ customer.email }}",
+        CustomerFirstName: "{{ customer.first_name }}",
+        CustomerLastName: "{{ customer.last_name }}",
+        CustomerOrdersCount: {{ customer.orders_count }},
+        CustomerTotalSpent: {{ customer.total_spent | divided_by: 100 }},
+    });
+{% else %}
+    window.dataLayer.push({
+        visitorType: "Guest"
+    });
+{% endif %}
+
+{% if template.name == "index" %}
+    window.dataLayer.push({
+        event: "HomeView",
+        pageType: "home",
+        ecomm_pagetype: "home" 
+    });
+{% elsif search.performed %}
+    window.dataLayer.push({
+        pageType: "searchresults",
+        ecomm_pagetype: "category"
+    });
+{% elsif template.name == "collection" %}
+    window.dataLayer.push({
+        pageType: "category",
+        collection: "{{ collection.title | remove: "'" }}",
+        ecomm_pagetype: "category"
+    });
+{% elsif template.name == "product" %}
+    window.dataLayer.push({
+        pageType: "product",
+        collection: "{{ product.collections[0].title | remove: "'" }}",
+        productType: "{{ product.type | remove: "'" }}",
+        ecomm_pagetype: "product"
+    });
+{% elsif template.name == "cart" %}
+    window.dataLayer.push({
+        pageType: "cart",
+        ecomm_pagetype: "cart"
+    });
+{% elsif template.name == "checkout" %}
+    window.dataLayer.push({
+        pageType: "checkout",
+        ecomm_pagetype: "cart"
+    });
+{% else %}
+    window.dataLayer.push({
+        pageType: "other"
+    });
+{% endif %}
+
+</script>
+
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-KZ9G7ZB');</script>
+<!-- End Google Tag Manager -->

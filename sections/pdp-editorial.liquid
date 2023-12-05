@@ -1,0 +1,239 @@
+{% style %}
+
+.pdp-editorial-{{ section.id }} .pdp-editorial-slide{
+    width: auto;
+    flex: 0 0 auto;
+}
+
+.pdp-editorial-{{ section.id }} .pdp-editorial-slide .media{
+    width: auto;
+    height: 40vw;
+    min-height: 22rem;
+}
+
+.pdp-editorial-{{ section.id }} .pdp-editorial-slider {
+    --swiper-theme-color: rgb(var(--color-white));
+    --swiper-navigation-color: rgb(var(--color-white));
+    --swiper-navigation-button-size: 6rem;
+    --swiper-navigation-icon-size: 2.4rem;
+}
+
+@media screen and (min-width: 769px) {
+
+    .pdp-editorial-{{ section.id }}{
+        padding-top: {{ section.settings.padding_top }}px;
+        padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+
+    .pdp-editorial-{{ section.id }} .pdp-editorial-slide .banner-content-overlay {
+        display: grid;
+        justify-content: start;
+        align-content: end;
+    }
+
+    .pdp-editorial-{{ section.id }} .pdp-editorial-slide .banner-cta-overlay {
+        display: grid;
+        justify-content: end;
+        align-content: end;
+    }
+
+    {%- for editorial_block_image in product.metafields.accentuate.editorial_block_image -%}
+
+        {%- assign editorial_block_opacity = product.metafields.accentuate.editorial_block_opacity[forloop.index0] -%}
+        {%- assign editorial_block_title_color = product.metafields.accentuate.editorial_block_title_color[forloop.index0] -%}
+        {%- assign editorial_block_cta_color = product.metafields.accentuate.editorial_block_cta_color[forloop.index0] -%}
+
+        .pdp-editorial-{{ section.id }} .pdp-editorial-banner-{{ forloop.index }} .banner-content-overlay{
+            background-color: rgba(0,0,0,{{ editorial_block_opacity | divided_by: 100.0 | round: 2 }});
+        }
+
+        .pdp-editorial-{{ section.id }} .pdp-editorial-banner-{{ forloop.index }} .banner-title{
+            {%- if editorial_block_title_color -%}
+            color: {{ editorial_block_title_color }};
+            {%- endif -%}
+        }
+
+        .pdp-editorial-{{ section.id }} .pdp-editorial-banner-{{ forloop.index }} .banner-cta{
+            {%- if editorial_block_title_color -%}
+            color: {{ editorial_block_cta_color }};
+            {%- endif -%}
+        }
+
+
+    {%- endfor -%}
+
+
+}
+
+@media only screen and (max-width: 768px) {
+
+    .pdp-editorial-{{ section.id }}{
+        padding-left: 0;
+        padding-right: 0;
+        padding-top: {{ section.settings.padding_top | times: 0.5 | round: 0 }}px;
+        padding-bottom: {{ section.settings.padding_bottom | times: 0.5 | round: 0 }}px;
+    }
+
+    .pdp-editorial-{{ section.id }} .pdp-editorial-slide .banner-content-overlay {
+        position: static;
+    }
+
+    .pdp-editorial-{{ section.id }} .pdp-editorial-slide .banner-cta-overlay {
+        position: static;
+        margin-top: 0.8rem;
+        padding: 0;
+    }
+
+}
+
+
+{% endstyle %}
+
+
+{% javascript %}
+
+    new Swiper(".pdp-editorial-slider", {
+
+        grabCursor: true,
+        slidesPerView: 'auto',
+        spaceBetween: 0,
+        mousewheel: {
+            forceToAxis: true,
+        },
+        freeMode: {
+            enabled: true,
+            sticky: false,
+        },
+        navigation: {
+            prevEl: ".swiper-nav-button--prev",
+            nextEl: ".swiper-nav-button--next",
+            disabledClass: "disabled--hidden"
+        },
+        
+    });
+
+{% endjavascript %}
+
+<div
+id="pdp-editorial-{{ section.id }}"
+class="pdp-editorial pdp-editorial-{{ section.id }} isolate"
+>
+
+    <div
+    id="pdp-editorial-slider-{{ section.id }}"
+    class="pdp-editorial-slider pdp-editorial-slider-{{ section.id }} swiper isolate"
+    role="region"
+    aria-label="Product page editorial slider"
+    >
+
+        <div class="swiper-wrapper">
+            
+        {%- for editorial_block_image in product.metafields.accentuate.editorial_block_image -%}
+        
+            {%- assign editorial_block_title = product.metafields.accentuate.editorial_block_title[forloop.index0] -%}
+            {%- assign editorial_block_cta = product.metafields.accentuate.editorial_block_cta[forloop.index0] -%}
+            {%- assign editorial_block_link = product.metafields.accentuate.editorial_block_link[forloop.index0] -%}
+
+            <div class="pdp-editorial-slide pdp-editorial-slide-{{ forloop.index }} swiper-slide">
+
+            <div class="pdp-editorial-banner pdp-editorial-banner-{{ forloop.index }} banner">
+
+                <img
+                srcset="{% render 'image-srcset-metafield', image: editorial_block_image[0] %}"
+                sizes="100vw"
+                width="{{ editorial_block_image[0].width }}"
+                height="{{ editorial_block_image[0].height }}"
+                src="{{ editorial_block_image[0].cloudinary_src | append: 'w_2048' }}"
+                loading="lazy"
+                alt="{% if editorial_block_image[0].alt %}{{ editorial_block_image[0].alt }}{% else %}{{ product.title }} editorial image {{ forloop.index }}{% endif %}"
+                class="media"
+                >
+
+                <div class="banner-content banner-overlay banner-content-overlay">
+
+                    {% if editorial_block_link %}
+                    <a class="link link--covering" href="{{ editorial_block_link }}" aria-hidden="true" tabindex="-1">&nbsp;</a>
+                    {% endif %}
+
+                    {% if editorial_block_title %}
+                    <h3 class="banner-title typography-heading typography-heading--5">{{ editorial_block_title }}</h3>
+                    {% endif %}
+
+                    {% if editorial_block_cta %}
+                    <div class="banner-overlay banner-cta-overlay">
+                    {%- if editorial_block_link -%}
+                            <a href="{{ editorial_block_link }}" class="banner-cta link link--cta typography-heading typography-heading--5">{{ editorial_block_cta }}</a>
+                    {%- else -%}
+                            <span class="banner-cta typography-heading typography-heading--5">{{ editorial_block_cta }}</span>
+                    {%- endif -%}
+                    </div>
+                    {% endif %}
+
+            
+                </div>
+                
+            </div>
+
+            </div>
+            
+        {%- endfor -%}
+        
+        </div>
+
+        <button
+        class="swiper-nav-button swiper-nav-button--prev" 
+        type="button"
+        name="previous"
+        aria-label="Previous slide"
+        aria-controls="hp-editorial-slider-{{ section.id }}"
+        >
+            {% render 'icon-arrow_left' %}
+        </button>
+
+        <button
+        class="swiper-nav-button swiper-nav-button--next" 
+        type="button"
+        name="next"
+        aria-label="Next slide"
+        aria-controls="hp-editorial-slider-{{ section.id }}"
+        >
+            {% render 'icon-arrow_right' %}
+        </button>
+
+    </div>
+
+</div>
+
+{% schema %}
+
+{
+    "name": "PDP Editorial",
+    "tag": "section",
+    "class": "section--pdp-editorial",
+    "templates": ["product"],
+    "settings": [
+        {
+            "type": "range",
+            "id": "padding_top",
+            "min": 0,
+            "max": 200,
+            "step": 2,
+            "unit": "px",
+            "label": "Padding Top",
+            "default": 80
+        },
+
+        {
+            "type": "range",
+            "id": "padding_bottom",
+            "min": 0,
+            "max": 200,
+            "step": 2,
+            "unit": "px",
+            "label": "Padding bottom",
+            "default": 0
+        }
+    ]
+}
+
+{% endschema %}

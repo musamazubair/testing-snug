@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="{{ request.locale.iso_code }}" dir="{{ direction }}" class="{{ checkout_html_classes }}">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="referrer" content="origin">
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+
+    <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
+
+    {%- if settings.favicon != blank -%}
+    <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
+    {%- endif -%}
+
+    <title>{{ page_title }}</title>
+
+    {{ checkout_stylesheets }}
+    {{ checkout_scripts }}
+
+    {% render 'style-settings' %}
+    <link href="{{ 'vendor.css' | asset_url }}" rel="stylesheet" type="text/css" media="all">
+    <link href="{{ 'global.css' | asset_url }}" rel="stylesheet" type="text/css" media="all">
+    <link href="{{ 'checkout.css' | asset_url }}" rel="stylesheet" type="text/css" media="all">
+
+    {% comment %}
+    {% render 'google-tag-manager-checkout' %}
+    {% endcomment %}
+
+    {{ content_for_header }}
+
+</head>
+
+<body>
+
+    {{ skip_to_content_link }}
+
+    <header class="banner" data-header role="banner">
+        <div class="wrap">
+            {{ content_for_logo }}
+        </div>
+    </header>
+
+    {{ order_summary_toggle }}
+    <div class="content" data-content>
+        <div class="wrap">
+            <div class="main">
+                <header class="main__header" role="banner">
+                    {{ content_for_logo }}
+                    {{ breadcrumb }}
+                    {{ alternative_payment_methods }}
+                </header>
+                <main class="main__content" role="main">
+                    {{ content_for_layout }}
+                </main>
+                <footer class="main__footer" role="contentinfo">
+                    {{ content_for_footer }}
+
+                </footer>
+            </div>
+            <aside class="sidebar" role="complementary">
+                <div class="sidebar__header">
+                    {{ content_for_logo }}
+                </div>
+                <div class="sidebar__content">
+                    {{ content_for_order_summary }}
+                </div>
+            </aside>
+        </div>
+    </div>
+
+    {{ tracking_code }}
+</body>
+
+</html>

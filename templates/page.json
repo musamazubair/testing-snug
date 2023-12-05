@@ -1,1 +1,9 @@
-{"sections":{"main":{"type":"main-page","settings":{"padding_top":28,"padding_bottom":28}}},"order":["main"]}
+{
+	"layout": "theme",
+	"sections": {
+		"page-main": {
+			"type": "page-main"
+		}
+	},
+	"order": ["page-main"]
+}

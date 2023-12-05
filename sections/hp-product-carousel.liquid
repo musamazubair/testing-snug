@@ -1,0 +1,187 @@
+{% style %}
+
+    .hp-product-carousel-{{ section.id }} .hp-product-carousel-heading {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: space-between;
+    }
+
+    .hp-product-carousel-{{ section.id }}{
+        --swiper-theme-color: rgb(var(--color-white));
+        --swiper-navigation-color: rgb(var(--color-white));
+        --swiper-navigation-button-size: 6rem;
+        --swiper-navigation-icon-size: 2rem;
+    }
+
+    .hp-product-carousel-{{ section.id }} .swiper-nav-button--next,
+    .hp-product-carousel-{{ section.id }} .swiper-nav-button--prev{
+        top: calc((100% - 38px)/2);
+    }
+
+    .hp-product-carousel-{{ section.id }} .swiper-nav-button{
+        display: none !important;
+    }    
+
+    @media screen and (min-width: 992px) {
+        .hp-product-carousel-{{ section.id }} .hp-product-carousel-heading {
+            padding: 0 2.6rem 2.6rem;
+        }
+    }
+
+    @media only screen and (max-width: 991px) {
+        .hp-product-carousel-{{ section.id }} .hp-product-carousel-heading {
+            padding: 0 1.3rem 1.2rem;
+        }
+    }
+
+    @media screen and (min-width: 769px) {
+        .hp-product-carousel-{{ section.id }}{
+            padding-top: {{ section.settings.padding_top }}px;
+            padding-bottom: {{ section.settings.padding_bottom }}px;
+        }
+    }
+
+    @media only screen and (max-width: 768px) {
+        .hp-product-carousel-{{ section.id }}{
+            padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+            padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+        }
+    }
+
+{% endstyle %}
+
+<homepage-product-carousel
+role="region"
+aria-label="Homepage product carousel"
+>
+
+    <div
+    id="hp-product-carousel-{{ section.id }}"
+    class="hp-product-carousel-{{ section.id }} hp-product-carousel swiper isolate"
+    >
+    
+        {%- if section.settings.title != blank or section.settings.cta_text != blank -%}
+
+        <div class="hp-product-carousel-heading">
+            {%- if section.settings.title != blank -%}
+            <h2 class="hp-product-carousel-title typography-body typography-body--2 typography-body--2-demi">
+                {{ section.settings.title }}
+            </h2>
+            {%- endif -%}
+
+            {%- if section.settings.cta_text != blank -%}
+                <a href="{{ section.settings.cta_link }}" class="hp-product-carousel-cta link link--hover typography-body typography-body--2 typography-body--2-demi">{{ section.settings.cta_text }}</a>
+            {%- endif -%}
+        </div>
+        
+        {%- endif -%}
+
+        <div class="swiper-wrapper">
+
+        {%- for product in section.settings.product_list -%}
+            
+            <div class="hp-product-horse-{{ product.id }} hp-product-horse swiper-slide">
+
+                {% render 'product-card', card_product: product, collection_url: section.settings.cta_link %}
+
+            </div>
+
+        {%- endfor -%}
+
+        </div>
+
+        <button
+        class="swiper-nav-button swiper-nav-button--prev" 
+        type="button"
+        name="previous"
+        aria-label="Previous slide"
+        aria-controls="hp-editorial-slider-{{ section.id }}"
+        >
+            {% render 'icon-arrow_left' %}
+        </button>
+
+        <button
+        class="swiper-nav-button swiper-nav-button--next" 
+        type="button"
+        name="next"
+        aria-label="Next slide"
+        aria-controls="hp-editorial-slider-{{ section.id }}"
+        >
+            {% render 'icon-arrow_right' %}
+        </button>
+
+    </div>
+
+</homepage-product-carousel>
+
+{% schema %}
+
+{
+    "name": "HP Product Carousel",
+    "tag": "section",
+    "class": "section--hp-product-carousel",
+    "templates": ["index"],
+
+    "settings": [
+
+        {
+            "type": "text",
+            "id": "title",
+            "label": "Title"
+        },
+        {
+            "type": "text",
+            "id": "cta_text",
+            "label": "CTA Text"
+        },
+        {
+            "type": "url",
+            "id": "cta_link",
+            "label": "CTA Link"
+        },
+
+        {
+            "type": "product_list",
+            "id": "product_list",
+            "label": "Products",
+            "limit": 24
+        },
+
+        {
+            "type": "header",
+            "content": "Section Padding"
+        },
+
+        {
+            "type": "range",
+            "id": "padding_top",
+            "min": 0,
+            "max": 120,
+            "step": 5,
+            "unit": "px",
+            "label": "Padding Top",
+            "default": 30
+        },
+
+        {
+            "type": "range",
+            "id": "padding_bottom",
+            "min": 0,
+            "max": 120,
+            "step": 5,
+            "unit": "px",
+            "label": "Padding bottom",
+            "default": 30
+        }
+
+    ],
+
+    "presets": [
+        {
+            "name": "HP Product Carousel"
+        }
+    ]
+}
+
+
+{% endschema %}

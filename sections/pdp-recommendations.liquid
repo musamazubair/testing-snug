@@ -1,0 +1,154 @@
+{% style %}
+
+    .pdp-recommendations-{{ section.id }}{
+        display: block;
+    }
+
+    .pdp-recommendations-{{ section.id }} .pdp-recommendations-title{
+        margin-bottom: 2.5rem;
+        text-align: center;
+    }
+
+    .pdp-recommendations-{{ section.id }} .pdp-recommendations-slider {
+        --swiper-theme-color: rgb(var(--color-black));
+        --swiper-navigation-color: rgb(var(--color-black));
+        --swiper-navigation-button-size: 6rem;
+        --swiper-navigation-icon-size: 2.4rem;
+    }
+
+    .pdp-recommendations-{{ section.id }} .pdp-recommendations-slider .swiper-nav-button--next,
+    .pdp-recommendations-{{ section.id }} .pdp-recommendations-slider .swiper-nav-button--prev{
+        top: calc((100% - 56px)/2);
+    }
+
+    @media screen and (min-width: 769px) {
+
+        .pdp-recommendations-{{ section.id }}{
+            padding-top: {{ section.settings.padding_top }}px;
+            padding-bottom: {{ section.settings.padding_bottom }}px;
+        }
+
+    }
+
+    @media only screen and (max-width: 768px) {
+
+        .pdp-recommendations-{{ section.id }}{
+            padding-left: 7px;
+            padding-right: 7px;
+            padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+            padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+        }
+
+    }
+
+{% endstyle %}
+
+<product-recommendations
+id="pdp-recommendations-{{ section.id }}"
+class="product-recommendations pdp-recommendations-{{ section.id }} isolate"
+data-url="{{ routes.product_recommendations_url }}?section_id={{ section.id }}&product_id={{ product.id }}&limit={{ section.settings.products_to_show }}">
+
+{% if recommendations.performed and recommendations.products_count > 0 %}
+
+   {%- if section.settings.title != blank -%}
+    <h2 class="pdp-recommendations-title typography-heading typography-heading--4">
+        {{ section.settings.title }}
+    </h2>
+   {%- endif -%}
+
+    <div
+    id="pdp-recommendations-slider-{{ section.id }}"
+    class="pdp-recommendations-slider pdp-recommendations-slider-{{ section.id }} swiper isolate"
+    role="region"
+    aria-label="Product recommendations slider"
+    >
+
+        <div class="swiper-wrapper">
+        
+        {% for recommendation_product in recommendations.products %}
+            
+            <div class="pdp-recommendations-slide pdp-recommendations-slide-{{ section.id }}-{{ recommendation_product.id }} swiper-slide">
+
+                {% render 'product-card', card_product: recommendation_product, collection_url: recommendation_product.metafields.accentuate.family_collection.value.url %}
+
+            </div>
+
+        {%- endfor -%}
+
+        </div>
+
+        <button
+        class="swiper-nav-button swiper-nav-button--prev" 
+        type="button"
+        name="previous"
+        aria-label="Previous slide"
+        aria-controls="hp-editorial-slider-{{ section.id }}"
+        >
+            {% render 'icon-arrow_left' %}
+        </button>
+
+        <button
+        class="swiper-nav-button swiper-nav-button--next" 
+        type="button"
+        name="next"
+        aria-label="Next slide"
+        aria-controls="hp-editorial-slider-{{ section.id }}"
+        >
+            {% render 'icon-arrow_right' %}
+        </button>
+
+    </div>
+
+{% endif %}
+
+</product-recommendations>
+
+
+
+
+{% schema %}
+{
+    "name": "PDP Recommendations",
+    "tag": "section",
+    "class": "section--pdp-recommendations",
+    "templates": ["product"],
+    "settings": [
+        {
+            "type": "text",
+            "id": "title",
+            "label": "Title"
+        },
+        {
+            "type": "range",
+            "id": "products_to_show",
+            "min": 3,
+            "max": 12,
+            "step": 1,
+            "default": 12,
+            "label": "Products to show"
+        },
+        {
+            "type": "range",
+            "id": "padding_top",
+            "min": 70,
+            "max": 200,
+            "step": 2,
+            "unit": "px",
+            "label": "Padding Top",
+            "default": 80
+        },
+
+        {
+            "type": "range",
+            "id": "padding_bottom",
+            "min": 70,
+            "max": 200,
+            "step": 2,
+            "unit": "px",
+            "label": "Padding bottom",
+            "default": 80
+        }
+    ]
+}
+
+{% endschema %}

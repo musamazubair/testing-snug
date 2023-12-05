@@ -1,0 +1,312 @@
+{% javascript %}
+if (window.matchMedia('(max-width: 768px)').matches) {
+    ScrollTrigger.create({
+        
+        trigger: ".pdp-info .product-form-button-list",
+        endTrigger:".pdp-info .product-form-button-list",
+        start: 'top bottom',
+        end:"bottom top",
+        toggleClass: {targets: ".product-shop-modal-opener", className: "active"}
+
+    });
+}
+{% endjavascript %}
+
+
+<section id="MainProduct-{{ section.id }}" data-section="{{ section.id }}">
+
+    <modal-opener class="product-shop-modal-opener modal-opener" data-modal="#product-shop-modal-{{ section.id }}">
+        <button class="button button--primary typography-heading typography-heading--5" type="button" aria-haspopup="dialog">Add to bag</button>
+    </modal-opener>
+
+    <modal-dialog id="product-shop-modal-{{ section.id }}" class="product-shop-modal-{{ section.id }} product-shop-modal modal">
+
+        <div class="modal-dialog modal-dialog--bottom modal-dialog--animation" role="dialog" aria-label="Product shop" aria-modal="true" tabindex="-1">
+            <div class="modal-dialog-inner">
+            <div class="modal-header">
+                <h3 class="modal-title typography-heading typography-heading--5">Choose configuration</h3>
+                <button id="ModalClose-product-shop" type="button" class="modal-close button button--icon-only" aria-label="Close">
+                    {% render 'icon-close' %}
+                </button>
+            </div>
+
+            <div class="modal-content">
+    
+            <product-form class="product-form" data-cart-type="drawer">
+    
+                {%- assign product_form_id = 'product-form-' | append: section.id -%}
+                
+                {%- form 'product', product, id: product_form_id, class: 'form', novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
+
+                    <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}" disabled>
+                    <input type="number" name="quantity" value="1" form="{{ product_form_id }}" readonly tabindex="-1" hidden>
+
+                    <!-- Option Product Selector -->
+
+                    {%- if option_product_list.count > 0 -%}
+                                
+                    <product-color-swatches
+                    id="product-color-swatches-{{ section.id }}"
+                    class="product-color-swatches"
+                    data-section="{{ section.id }}"
+                    >
+
+                        <fieldset class="product-form-option">
+
+                            <legend class="product-form-option-title typography-heading typography-heading--5">
+                                {{ product.metafields.accentuate.option_title }}: {{ product.metafields.accentuate.option_title_value }}
+                            </legend>
+
+                            <ul class="product-color-swatch-list product-form-option-value-list" role="list">
+
+                            {%- assign default_variant_title = product.selected_or_first_available_variant.title -%}
+                                
+                            {%- for option_product in option_product_list -%}
+
+                                {% comment %}
+
+                                    Find default variant of option product
+
+                                {% endcomment %}
+                                
+                                {% comment %}
+                                    - first available variant
+                                {% endcomment %}
+                                {%- assign option_product_default_variant = option_product.first_available_variant -%}
+
+                                {% comment %}
+                                    - specific variant managed in metafield
+                                {% endcomment %}
+                                {%- if option_product.metafields.accentuate.default_variant -%}
+                                    {%- assign option_product_default_variant_id = option_product.metafields.accentuate.default_variant | split: ':' | last | plus: 0 -%}
+                                    {%- assign option_product_default_variant = option_product.variants | where: "id", option_product_default_variant_id | first -%}
+                                {%- endif -%}
+                                
+                                {% comment %}
+                                    - the varaint with the same option as the current product
+                                {% endcomment %}
+                                {%- for option_product_variant in option_product.variants -%}
+                                    {%- if option_product_variant.title == default_variant_title -%}
+                                        {%- assign option_product_default_variant = option_product_variant -%}
+                                        {%- break -%}
+                                    {%- endif -%}
+                                {%- endfor -%}
+
+                                <li class="product-color-swatch product-form-option-value">
+
+                                    <a href="{{ option_product_default_variant.url | within: collection }}" class="product-form-color-swatch link link--block {% if option_product.handle == product.handle %} selected{% endif %}" data-color-swatch="{{ option_product.metafields.accentuate.option_title_value | handle }}" >
+                                        <span class="visually-hidden">{{ option_product.metafields.accentuate.option_title_value }}</span>
+                                    </a>
+
+                                    <script type="application/json">
+                                    {{ option_product.variants | json }}
+                                    </script>
+
+                                </li>
+
+                            {%- endfor -%}
+
+                            </ul>
+
+                        </fieldset>
+
+                    </product-color-swatches>
+
+                    {%- endif -%}
+
+                    <!-- Variant Selector -->
+    
+                    {%- unless product.has_only_default_variant -%}
+    
+    
+                    <variant-radios
+                    class="product-variant-radios"
+                    data-section="{{ section.id }}"
+                    data-url="{{ product.url }}"
+                    >
+
+                    <div class="product-form-option-list">
+
+                        {%- for option in product.options_with_values -%}
+
+                            {%- assign option_name_handle = option.name | handle -%}
+                            {%- assign option_values_size = option.values.size -%}
+
+                            <fieldset class="product-form-option">
+
+                                <legend class="product-form-option-title typography-heading typography-heading--5">
+                                    {{ option.name }}: <span>{{ option.selected_value }}</span>
+                                </legend>
+
+                                <ul class="product-form-option-value-list" role="list">
+                                    
+                                {%- assign option_values = option.values -%}
+                                {%- unless option_name_handle == "option" -%}
+                                {%- assign option_values = option.values | sort_natural -%}
+                                {%- endunless -%}
+                                    
+                                {%- for value in option_values -%}
+
+                                <li class="product-form-option-value {% if option_name_handle == "option" %} field--radio{% endif %}">
+
+                                    <input
+                                    type="radio"
+                                    id="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
+                                    name="{{ option.name }}"
+                                    value="{{ value | escape }}"
+                                    form="{{ product_form_id }}"
+                                    {% if option.selected_value == value %}
+                                        checked
+                                    {% endif %}
+                                    >
+
+                                    <label for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}" class="typography-heading typography-heading--5" {% if option_name_handle contains "shape" %}data-diamond-shape="{{ value | handle }}"{% endif %}>
+                                        {%- if option_name_handle contains "shape" -%}
+                                            <span class="visually-hidden">{{ value }}</span>
+                                        {%- elsif option.name contains "Carat" -%}
+                                            {{ value | remove_last: ' CT' }}
+                                        {%- elsif option.name contains "Length" -%}
+                                            {{ value | remove_last: ' IN' }}
+                                        {%- else -%}
+                                            {{ value }}
+                                        {%- endif -%}
+                                    </label>
+
+                                </li>
+
+                                {%- endfor -%}
+
+                                </ul>
+
+                            </fieldset>
+
+                        {%- endfor -%}
+
+                        <script type="application/json">
+                            {{ product.variants | json }}
+                        </script>
+
+                    </div>
+
+                    </variant-radios>
+
+                    <!-- Variant Properties -->
+
+                    {%- assign variant_property_name_list = product.selected_or_first_available_variant.metafields.accentuate.property_name -%}
+                    {%- assign variant_property_value_list = product.selected_or_first_available_variant.metafields.accentuate.property_value -%}
+
+                    {%- if variant_property_name_list.size != 0 and variant_property_value_list != 0 -%}
+                    <div
+                    id="product-variant-properties-{{ section.id }}"
+                    class="product-variant-properties"
+                    role="status"
+                    >
+                        <ul class="product-variant-property-list" role="list">
+                            {%- for variant_property_name in variant_property_name_list -%}
+                            {%- assign variant_property_value = variant_property_value_list[forloop.index0] -%}
+                            <li class="product-variant-property">
+                                <p class="product-variant-property-line typography-heading typography-heading--5">
+                                    {{ variant_property_name }}: <span>{{ variant_property_value }}</span>
+                                </p>
+                            </li>
+                           
+                            {%- endfor -%}
+                        </ul>
+                    </div>
+                    {%- endif -%}
+                    
+                    {%- endunless -%}
+
+                    <!-- Message -->
+            
+                    {%- if product.metafields.accentuate.pending_shipment_message -%}
+
+                        {%- if product.metafields.accentuate.pending_shipment_in_days -%}
+                        
+                            {% assign pending_days = product.metafields.accentuate.pending_shipment_in_days %}
+                            {% assign pending_timestamp = pending_days | times: 24 | times: 3600 %}
+                            {% assign now_timestamp = "now" | date: '%s' %}
+                            {% assign ship_timestamp = now_timestamp | plus: pending_timestamp %}
+
+                            {% assign ship_date = ship_timestamp | date: "%m/%d/%Y" %}
+
+                            <div class="product-notice-message typography-heading typography-heading--6">
+                                {{ product.metafields.accentuate.pending_shipment_message | replace: '#date#', ship_date }}
+                            </div>
+                            
+                        {%- else -%}
+
+                            <div class="product-notice-message typography-heading typography-heading--6">
+                                {{ product.metafields.accentuate.pending_shipment_message }}
+                            </div>
+                            
+                        {%- endif -%}
+                    
+                    {%- endif -%}
+                    
+                    <!-- Buy Button List -->
+                        <div class="product-form-button-list">
+                            <button
+                            type="submit"
+                            name="add"
+                            data-product-data="{{ product | json | escape }}"
+                            class="product-form-submit button button--secondary typography-heading typography-heading--5 {% if product.selected_or_first_available_variant.available == false %}BIS_trigger{% endif %}"
+                            {% if product.selected_or_first_available_variant.available == false %}
+                            disabled
+                            {% endif %}
+                            >
+                                <span>
+                                    {%- if product.selected_or_first_available_variant.available -%}
+                                    Add to bag
+                                    {%- else -%}
+                                    Sold out
+                                    {%- endif -%}
+                                </span>
+
+
+                                <span id="product-floaty-price-{{ section.id }}" role="status">
+                                    {%- render 'price', product: product -%}
+                                </span>
+
+
+                                <div class="loading-overlay__spinner hidden">
+                                    <svg aria-hidden="true" focusable="false" role="presentation" class="spinner" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+                                    <circle class="path" fill="none" stroke-width="6" cx="33" cy="33" r="30"></circle>
+                                    </svg>
+                                </div>
+                            </button>
+                        </div>
+    
+                    <!-- Error Message -->
+
+                    <div class="product-form-error-message-wrapper typography-heading typography-heading--8" role="alert" hidden>
+                        <span class="product-form-error-message"></span>
+                    </div>
+    
+                {%- endform -%}
+                
+            </product-form>
+
+            </div>
+            </div>
+
+        </div>
+    </modal-dialog>
+
+</section>
+    
+
+
+{% schema %}
+
+{
+    "name": "PDP Floaty",
+    "tag": "section",
+    "class": "section--pdp-floaty",
+    "templates": ["product"],
+    "settings": [
+
+    ]
+}
+
+{% endschema %}

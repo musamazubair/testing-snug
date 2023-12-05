@@ -1,1 +1,328 @@
-{"sections":{"image_banner":{"type":"image-banner","blocks":{"heading":{"type":"heading","settings":{"heading":"Browse our latest products","heading_size":"h0"}},"button":{"type":"buttons","settings":{"button_label_1":"Shop all","button_link_1":"shopify:\/\/collections\/all","button_style_secondary_1":true,"button_label_2":"","button_link_2":"","button_style_secondary_2":false}}},"block_order":["heading","button"],"settings":{"image_overlay_opacity":40,"image_height":"large","desktop_content_position":"bottom-center","show_text_box":false,"desktop_content_alignment":"center","color_scheme":"inverse","image_behavior":"none","mobile_content_alignment":"center","stack_images_on_mobile":false,"show_text_below":false}},"featured_collection":{"type":"featured-collection","settings":{"title":"Featured products","heading_size":"h2","description":"","show_description":false,"description_style":"body","collection":"all","products_to_show":8,"columns_desktop":4,"full_width":false,"show_view_all":true,"view_all_style":"solid","enable_desktop_slider":false,"color_scheme":"background-1","image_ratio":"adapt","image_shape":"default","show_secondary_image":true,"show_vendor":false,"show_rating":false,"enable_quick_add":false,"columns_mobile":"2","swipe_on_mobile":false,"padding_top":44,"padding_bottom":36}}},"order":["image_banner","featured_collection"]}
+{
+  "layout": "theme",
+  "wrapper": "div.index-template-sections-wrapper.template-sections-wrapper",
+  "sections": {
+    "hp-slider": {
+      "type": "hp-slider",
+      "blocks": {
+        "9727f06b-0582-4142-96cd-ec1ad723b0a8": {
+          "type": "block",
+          "settings": {
+            "media_type": "video",
+            "media_size": "meida-window-height",
+            "video": "shopify:\/\/files\/videos\/hp_slide_1.mp4",
+            "video_alter": "shopify:\/\/files\/videos\/hp_slide_1 - 01.mp4",
+            "overlay_opacity": 0,
+            "slider_control_color": "#ffffff",
+            "text_placement_hor": "start",
+            "text_placement_vert": "end",
+            "text_alignment": "left",
+            "title": "<p>AWARD-WINNING COLLECTION<\/p>",
+            "title_color": "#ffffff",
+            "subtitle": "<p>Explore Bright Blonde<\/p>",
+            "subtitle_color": "#ffffff",
+            "paragraph": "",
+            "paragraph_color": "#ffffff",
+            "cta_1_text": "SHOP HAIR",
+            "cta_1_color": "light",
+            "cta_1_link": "shopify:\/\/collections\/new-in-hair",
+            "cta_2_text": "",
+            "cta_2_color": "light",
+            "cta_2_link": "",
+            "cta_independent_placement": false,
+            "cta_placement_hor": "end",
+            "cta_placement_vert": "end"
+          }
+        },
+        "88cc6c83-3638-4042-ad28-89cd90ba4c15": {
+          "type": "block",
+          "settings": {
+            "media_type": "image",
+            "media_size": "meida-window-height",
+            "image": "shopify:\/\/shop_images\/1200Wx1200H-401859-5_1.jpg",
+            "image_alter": "shopify:\/\/shop_images\/1200Wx1200H-401859-5_-_01.jpg",
+            "overlay_opacity": 0,
+            "slider_control_color": "#ffffff",
+            "text_placement_hor": "end",
+            "text_placement_vert": "center",
+            "text_alignment": "left",
+            "title": "<p>HOLIDAY SEASON<\/p>",
+            "title_color": "#ffffff",
+            "subtitle": "<p>Celebrate In Style<\/p>",
+            "subtitle_color": "#ffffff",
+            "paragraph": "<p>Create effortless—and endless—holiday looks with Oribe styling icons.<\/p>",
+            "paragraph_color": "#ffffff",
+            "cta_1_text": "SHOP GIFTS",
+            "cta_1_color": "light",
+            "cta_1_link": "shopify:\/\/collections\/new-in-hair",
+            "cta_2_text": "",
+            "cta_2_color": "light",
+            "cta_2_link": "",
+            "cta_independent_placement": false,
+            "cta_placement_hor": "end",
+            "cta_placement_vert": "end"
+          }
+        },
+        "498128aa-74fa-4314-82ea-131e298d0fc7": {
+          "type": "block",
+          "settings": {
+            "media_type": "image",
+            "media_size": "meida-window-height",
+            "image": "shopify:\/\/shop_images\/NOV-Brush-1920x768_1.jpg",
+            "image_alter": "shopify:\/\/shop_images\/NOV-Brush-1920x768_2.jpg",
+            "overlay_opacity": 50,
+            "slider_control_color": "#ffffff",
+            "text_placement_hor": "center",
+            "text_placement_vert": "end",
+            "text_alignment": "center",
+            "title": "<p>HOLIDAY SEASON<\/p>",
+            "title_color": "#ffffff",
+            "subtitle": "<p>Make the Everyday Exquisite<\/p>",
+            "subtitle_color": "#ffffff",
+            "paragraph": "<p>Introducing luxuriously-crafted Italian resin brushes and combs to create the perfect hair ritual.<\/p>",
+            "paragraph_color": "#ffffff",
+            "cta_1_text": "SHOP HAIR",
+            "cta_1_color": "light",
+            "cta_1_link": "shopify:\/\/collections\/new-in-hair",
+            "cta_2_text": "SHOP GIFTS",
+            "cta_2_color": "light",
+            "cta_2_link": "shopify:\/\/collections\/new-in-hair",
+            "cta_independent_placement": false,
+            "cta_placement_hor": "end",
+            "cta_placement_vert": "end"
+          }
+        }
+      },
+      "block_order": [
+        "9727f06b-0582-4142-96cd-ec1ad723b0a8",
+        "88cc6c83-3638-4042-ad28-89cd90ba4c15",
+        "498128aa-74fa-4314-82ea-131e298d0fc7"
+      ],
+      "settings": {
+      }
+    },
+    "84b46ac1-a433-434d-bc65-ed467b66f9c8": {
+      "type": "hp-text",
+      "settings": {
+        "title": "",
+        "subtitle": "<p>THESE ARE THE PRODUCTS OF THE <em>HAIR<\/em> OBSESSED<\/p>",
+        "paragraph": "<p>Tested on set, backstage and in the salon, our hair care was designed for the most discriminating professionals and customers.<\/p>",
+        "text_placement_hor": "center",
+        "text_alignment": "center",
+        "padding_top": 30,
+        "padding_bottom": 30
+      }
+    },
+    "98641e14-f5d7-418a-8caf-43cf691c7812": {
+      "type": "hp-product-carousel",
+      "settings": {
+        "title": "NEW IN HAIR",
+        "cta_text": "VIEW ALL",
+        "cta_link": "shopify:\/\/collections\/new-in-hair",
+        "product_list": [
+          "bright-blonde-shampoo-regular-250ml",
+          "serene-scalp-anti-dandruff-shampoo-regular-250ml",
+          "hair-alchemy-resilience-shampoo-regular-250ml",
+          "brilliance-shine-shampoo-regular-250ml",
+          "gold-lust-repair-restore-shampoo-regular-250ml",
+          "silverati-shampoo-regular-250ml",
+          "magnificent-volume-shampoo-regular-250ml",
+          "signature-shampoo-regular-250ml"
+        ],
+        "padding_top": 0,
+        "padding_bottom": 30
+      }
+    },
+    "02fbae1d-bddf-4475-9224-d42ec3503a0b": {
+      "type": "hp-video",
+      "settings": {
+        "video": "shopify:\/\/files\/videos\/hp_video_3.mp4",
+        "video_alter": "shopify:\/\/files\/videos\/hp_video_3 - 01.mp4",
+        "overlay_opacity": 20,
+        "video_control_color": "#ffffff",
+        "text_placement_hor": "start",
+        "text_placement_vert": "end",
+        "text_alignment": "left",
+        "title": "<p>NYFW SS 23<\/p>",
+        "title_color": "#ffffff",
+        "subtitle": "<p>Backstage:<br\/><em>Eckhaus Latta x Oribe<\/em><\/p>",
+        "subtitle_color": "#ffffff",
+        "paragraph": "",
+        "paragraph_color": "#ffffff",
+        "cta_1_text": "",
+        "cta_1_color": "light",
+        "cta_1_link": "shopify:\/\/collections\/new-in-hair",
+        "cta_2_text": "",
+        "cta_2_color": "light",
+        "cta_2_link": "",
+        "cta_independent_placement": false,
+        "cta_placement_hor": "end",
+        "cta_placement_vert": "end"
+      }
+    },
+    "984a0931-1dc6-4bc5-9887-815dfeae8875": {
+      "type": "hp-editorial",
+      "blocks": {
+        "03e265fa-4191-4e68-a471-dbd7ec1d6e0a": {
+          "type": "block",
+          "settings": {
+            "media_type": "image",
+            "media_size": "media-natural-size",
+            "image": "shopify:\/\/shop_images\/4x5ORIBE_TresSet_Stills_SH02_0351_V1.jpg",
+            "image_alter": "shopify:\/\/shop_images\/4x5ORIBE_TresSet_Stills_SH02_0351_V1.jpg",
+            "overlay_opacity": 0,
+            "text_placement_hor": "start",
+            "text_placement_vert": "end",
+            "text_alignment": "left",
+            "title": "",
+            "title_color": "#ffffff",
+            "subtitle": "",
+            "subtitle_color": "#ffffff",
+            "paragraph": "",
+            "paragraph_color": "#ffffff",
+            "cta_1_text": "SHOP BESTSELLERS",
+            "cta_1_color": "light",
+            "cta_1_link": "shopify:\/\/collections\/new-in-hair",
+            "cta_2_text": "",
+            "cta_2_color": "#ffffff",
+            "cta_2_link": "",
+            "cta_independent_placement": false,
+            "cta_placement_hor": "end",
+            "cta_placement_vert": "end"
+          }
+        },
+        "8ce46673-bceb-42b7-ba14-670885074be1": {
+          "type": "block",
+          "settings": {
+            "media_type": "image",
+            "media_size": "media-natural-size",
+            "image": "shopify:\/\/shop_images\/goldlust-home_1.jpg",
+            "image_alter": "shopify:\/\/shop_images\/goldlust-home_1.jpg",
+            "overlay_opacity": 20,
+            "text_placement_hor": "start",
+            "text_placement_vert": "end",
+            "text_alignment": "left",
+            "title": "BACKSTAGE",
+            "title_color": "#ffffff",
+            "subtitle": "Oribe Education",
+            "subtitle_color": "#ffffff",
+            "paragraph": "Tested on set, backstage and in the salon, our hair care was designed \nfor the most discriminating professionals and customers.",
+            "paragraph_color": "#ffffff",
+            "cta_1_text": "LEARN MORE",
+            "cta_1_color": "light",
+            "cta_1_link": "shopify:\/\/collections\/new-in-hair",
+            "cta_2_text": "",
+            "cta_2_color": "#ffffff",
+            "cta_2_link": "",
+            "cta_independent_placement": false,
+            "cta_placement_hor": "end",
+            "cta_placement_vert": "end"
+          }
+        }
+      },
+      "block_order": [
+        "03e265fa-4191-4e68-a471-dbd7ec1d6e0a",
+        "8ce46673-bceb-42b7-ba14-670885074be1"
+      ],
+      "settings": {
+      }
+    },
+    "62d7b3c6-4402-4653-b938-ba98136708a7": {
+      "type": "hp-product-grid",
+      "settings": {
+        "media_type": "image",
+        "image": "shopify:\/\/shop_images\/banner1_1.jpg",
+        "image_alter": "shopify:\/\/shop_images\/banner1_1.jpg",
+        "overlay_opacity": 40,
+        "text_placement_hor": "start",
+        "text_placement_vert": "center",
+        "text_alignment": "left",
+        "title": "<p>SHOP THE COLLECTION<\/p>",
+        "title_color": "#ffffff",
+        "subtitle": "<p>The Art of the <br\/>Perfect Gift<\/p>",
+        "subtitle_color": "#ffffff",
+        "paragraph": "<p>Introducing Kohei (ko-he) Kyomori, the contemporary decorative<br\/>artist behind our limited-edition Holiday 2022 collection.<\/p>",
+        "paragraph_color": "#ffffff",
+        "cta_1_text": "LEARN MORE",
+        "cta_1_color": "light",
+        "cta_1_link": "shopify:\/\/collections\/new-in-hair",
+        "cta_2_text": "SHOP GIFTING",
+        "cta_2_color": "light",
+        "cta_2_link": "shopify:\/\/collections\/new-in-hair",
+        "cta_independent_placement": false,
+        "cta_placement_hor": "end",
+        "cta_placement_vert": "end",
+        "product_list": [
+          "gold-lust-set",
+          "signature-experience-collection",
+          "style-refresh-set",
+          "hand-care-set"
+        ]
+      }
+    },
+    "f28b05a3-c203-4c45-aa16-0ae73e996f23": {
+      "type": "hp-video",
+      "settings": {
+        "video": "shopify:\/\/files\/videos\/hp_video_1.mp4",
+        "video_alter": "shopify:\/\/files\/videos\/hp_video_1 - 01.mp4",
+        "overlay_opacity": 0,
+        "video_control_color": "#ffffff",
+        "text_placement_hor": "center",
+        "text_placement_vert": "center",
+        "text_alignment": "center",
+        "title": "<p>NYFW SS 23<\/p>",
+        "title_color": "#ffffff",
+        "subtitle": "<p>Backstage:<br\/><em>Eckhaus Latta x Oribe<\/em><\/p>",
+        "subtitle_color": "#ffffff",
+        "paragraph": "",
+        "paragraph_color": "#ffffff",
+        "cta_1_text": "SHOP FEATURED",
+        "cta_1_color": "light",
+        "cta_1_link": "shopify:\/\/collections\/new-in-hair",
+        "cta_2_text": "",
+        "cta_2_color": "light",
+        "cta_2_link": "",
+        "cta_independent_placement": false,
+        "cta_placement_hor": "end",
+        "cta_placement_vert": "end"
+      }
+    },
+    "d4b00085-9bf9-44c0-8c1f-314d751514ad": {
+      "type": "hp-video",
+      "settings": {
+        "video": "shopify:\/\/files\/videos\/hp_video_2.mp4",
+        "video_alter": "shopify:\/\/files\/videos\/hp_video_2 - 01.mp4",
+        "overlay_opacity": 0,
+        "video_control_color": "#ffffff",
+        "text_placement_hor": "center",
+        "text_placement_vert": "center",
+        "text_alignment": "center",
+        "title": "",
+        "title_color": "#ffffff",
+        "subtitle": "",
+        "subtitle_color": "#ffffff",
+        "paragraph": "",
+        "paragraph_color": "#ffffff",
+        "cta_1_text": "",
+        "cta_1_color": "light",
+        "cta_1_link": "",
+        "cta_2_text": "",
+        "cta_2_color": "light",
+        "cta_2_link": "",
+        "cta_independent_placement": false,
+        "cta_placement_hor": "end",
+        "cta_placement_vert": "end"
+      }
+    }
+  },
+  "order": [
+    "hp-slider",
+    "84b46ac1-a433-434d-bc65-ed467b66f9c8",
+    "98641e14-f5d7-418a-8caf-43cf691c7812",
+    "02fbae1d-bddf-4475-9224-d42ec3503a0b",
+    "984a0931-1dc6-4bc5-9887-815dfeae8875",
+    "62d7b3c6-4402-4653-b938-ba98136708a7",
+    "f28b05a3-c203-4c45-aa16-0ae73e996f23",
+    "d4b00085-9bf9-44c0-8c1f-314d751514ad"
+  ]
+}

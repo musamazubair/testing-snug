@@ -1,0 +1,189 @@
+{% layout none %}
+
+{% render 'style-settings' %}
+{{ 'global.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'vendor.js' | asset_url }}" defer></script>
+
+<style>
+
+    body {
+        background-color: #E4E4E4;
+    }
+
+    .dev-sg-container{
+        max-width: 600px;
+        margin: auto;
+        padding: 50px 15px;
+    }
+
+    .dev-sg-list + .dev-sg-list{
+        margin-top: 80px;
+    }
+
+    .dev-sg-list > * + *{
+        margin-top: 5rem;
+    }
+
+    .dev-sg-list-item > * + *{
+        margin-top: 1rem;
+    }
+
+    .dev-sg-list-item-title{
+        font-size: 1.6rem;
+        color: #aaa;
+    }
+
+</style>
+
+<div class="dev-sg-container">
+
+    <!-- Typography Heading -->
+
+    <section class="dev-sg-typography-list dev-sg-list">
+
+        <div class="dev-sg-list-item">
+            <h2 class="dev-sg-list-item-title">Heading 1</h2>
+            <h3 class="typography-heading typography-heading--1">Heading 1</h3>
+        </div>
+        <div class="dev-sg-list-item">
+            <h2 class="dev-sg-list-item-title">Heading 1 Italic</h2>
+            <h3 class="typography-heading typography-heading--1 typography-heading--1-italic">Heading 1 Italic</h3>
+        </div>
+        <div class="dev-sg-list-item">
+            <h2 class="dev-sg-list-item-title">Heading 2</h2>
+            <h3 class="typography-heading typography-heading--2">Heading 2</h3>
+        </div>
+        <div class="dev-sg-list-item">
+            <h2 class="dev-sg-list-item-title">Heading 2 Italic</h2>
+            <h3 class="typography-heading typography-heading--2 typography-heading--2-italic">Heading 2 Italic</h3>
+        </div>
+        <div class="dev-sg-list-item">
+            <h2 class="dev-sg-list-item-title">Heading 3</h2>
+            <h3 class="typography-heading typography-heading--3">Heading 3</h3>
+        </div>
+        <div class="dev-sg-list-item">
+            <h2 class="dev-sg-list-item-title">Heading 3 Italic</h2>
+            <h3 class="typography-heading typography-heading--3 typography-heading--3-italic">Heading 3 Italic</h3>
+        </div>
+        <div class="dev-sg-list-item">
+            <h2 class="dev-sg-list-item-title">Heading 4</h2>
+            <h3 class="typography-heading typography-heading--4">Heading 4</h3>
+        </div>
+        <div class="dev-sg-list-item">
+            <h2 class="dev-sg-list-item-title">Heading 4 Italic</h2>
+            <h3 class="typography-heading typography-heading--4 typography-heading--4-italic">Heading 4 Italic</h3>
+        </div>
+        <div class="dev-sg-list-item">
+            <h2 class="dev-sg-list-item-title">Heading 5</h2>
+            <h3 class="typography-heading typography-heading--5">Heading 5</h3>
+        </div>
+        <div class="dev-sg-list-item">
+            <h2 class="dev-sg-list-item-title">Heading 5 Italic</h2>
+            <h3 class="typography-heading typography-heading--5 typography-heading--5-italic">Heading 5 Italic</h3>
+        </div>
+        <div class="dev-sg-list-item">
+            <h2 class="dev-sg-list-item-title">Heading 6</h2>
+            <h3 class="typography-heading typography-heading--6">Heading 6</h3>
+        </div>
+        <div class="dev-sg-list-item">
+            <h2 class="dev-sg-list-item-title">Heading 6 Italic</h2>
+            <h3 class="typography-heading typography-heading--6 typography-heading--6-italic">Heading 6 Italic</h3>
+        </div>
+        <div class="dev-sg-list-item">
+            <h2 class="dev-sg-list-item-title">Heading 7</h2>
+            <h3 class="typography-heading typography-heading--7">Heading 7</h3>
+        </div>
+        <div class="dev-sg-list-item">
+            <h2 class="dev-sg-list-item-title">Heading 8</h2>
+            <h3 class="typography-heading typography-heading--8">Heading 8</h3>
+        </div>
+        <div class="dev-sg-list-item">
+            <h2 class="dev-sg-list-item-title">Heading 9</h2>
+            <h3 class="typography-heading typography-heading--9">Heading 9</h3>
+        </div>
+
+    </section>
+
+    <!-- Typography Text -->
+
+    <section class="dev-sg-typography-list dev-sg-list">
+
+        <div class="dev-sg-list-item">
+            <h2 class="dev-sg-list-item-title">Body 1</h2>
+            <p class="typography-body typography-body--1">Body 1</p>
+        </div>
+        <div class="dev-sg-list-item">
+            <h2 class="dev-sg-list-item-title">Body 2</h2>
+            <p class="typography-body typography-body--2">Body 2</p>
+        </div>
+        <div class="dev-sg-list-item">
+            <h2 class="dev-sg-list-item-title">Body 3</h2>
+            <p class="typography-body typography-body--3">Body 3</p>
+        </div>
+        <div class="dev-sg-list-item">
+            <h2 class="dev-sg-list-item-title">Body 4</h2>
+            <p class="typography-body typography-body--4">Body 4</p>
+        </div>
+        <div class="dev-sg-list-item">
+            <h2 class="dev-sg-list-item-title">Body 5</h2>
+            <p class="typography-body typography-body--5">Body 5</p>
+        </div>
+        <div class="dev-sg-list-item">
+            <h2 class="dev-sg-list-item-title">Body 6</h2>
+            <p class="typography-body typography-body--6">Body 6</p>
+        </div>
+        <div class="dev-sg-list-item">
+            <h2 class="dev-sg-list-item-title">Body 7</h2>
+            <p class="typography-body typography-body--7">Body 7</p>
+        </div>
+        
+    </section>
+
+    <!-- Button -->
+
+    <section class="dev-sg-button-list dev-sg-list">
+
+        <div class="dev-sg-list-item">
+            <h2 class="dev-sg-list-item-title">Button Primary (White)</h2>
+            <button class="button button--primary-light typography-body typography-body--3">Shop Hair</button>
+        </div>
+        <div class="dev-sg-list-item">
+            <h2 class="dev-sg-list-item-title">Button Primary (Black)</h2>
+            <button class="button button--primary-dark typography-body typography-body--3">Shop Hair</button>
+        </div>
+        <div class="dev-sg-list-item">
+            <h2 class="dev-sg-list-item-title">Button Secondary (Outline)</h2>
+            <button class="button button--secondary typography-body typography-body--3">Shop Hair</button>
+        </div>
+        <div class="dev-sg-list-item">
+            <h2 class="dev-sg-list-item-title">Button Link</h2>
+            <button class="unstyled-button link link--hover link--underline typography-heading typography-heading--6">Shipping Information</button>
+        </div>
+
+    </section>
+
+
+    <section class="dev-sg-link-list dev-sg-list">
+
+        <div class="dev-sg-list-item">
+            <h2 class="dev-sg-list-item-title">Link</h2>
+            <a href="#" class="link link--inline-block link--hover link--underline typography-heading typography-heading--6">Link</a>
+        </div>
+
+    </section>
+
+    <!-- Input & Dropdown -->
+
+    <section class="dev-sg-input-list dev-sg-list">
+
+        <div class="dev-sg-list-item">
+            <h2 class="dev-sg-list-item-title">Input</h2>
+            <div class="field field--input typography-body typography-body--4">
+                <label for="input1">Email Address</label>
+                <input type="text" name="input1" id="input1" placeholder="Email Address">
+            </div>
+        </div>
+
+    </section>
+
+</div>

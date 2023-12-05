@@ -1,0 +1,196 @@
+{% style %}
+
+    .hp-text-{{ section.id }}{
+
+        {%- if section.settings.text_color != blank -%}
+        color: {{ section.settings.text_color }};
+        {%- endif -%}
+
+        {%- if section.settings.text_background_color != blank -%}
+        background-color: {{ section.settings.text_background_color }};
+        {%- endif -%}
+
+    }
+
+    @media screen and (min-width: 769px) {
+
+        .hp-text-{{ section.id }}{
+            display: grid;
+            justify-items: {{ section.settings.text_placement_hor }};
+            justify-content: {{ section.settings.text_placement_hor }};
+            justify-items: {{ section.settings.text_alignment }};
+            text-align: {{ section.settings.text_alignment }};
+
+            padding-left: 3rem;
+            padding-right: 3rem;
+            padding-top: {{ section.settings.padding_top }}px;
+            padding-bottom: {{ section.settings.padding_bottom }}px;
+        }
+
+        .hp-text-{{ section.id }} .banner-title {
+            max-width: 60rem;
+        }
+
+        .hp-text-{{ section.id }} .banner-subtitle {
+            max-width: 80rem;
+        }
+
+        .hp-text-{{ section.id }} .banner-paragraph {
+            max-width: 60rem;
+        }
+
+    }
+
+    @media only screen and (max-width: 768px) {
+
+        .hp-text-{{ section.id }}{
+            text-align: center;
+            padding-left: 15px;
+            padding-right: 15px;
+            padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+            padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+        }
+
+        .hp-text-{{ section.id }} .banner-subtitle {
+            --font-heading-size: var(--font-size-heading-4-mobile);
+            --font-heading-line-height: var(--line-height-heading-4-mobile);
+            --font-heading-letter-spacing: var(--letter-spacing-heading-4-mobile);
+        }
+
+    }
+
+{% endstyle %}
+
+<div
+id="hp-text-{{ section.id }}"
+class="hp-text-{{ section.id }} hp-text isolate"
+role="region"
+aria-label="Homepage text">
+
+    {%- if section.settings.title != blank -%}
+    <h2 class="banner-title typography-heading typography-heading--9">{{ section.settings.title | newline_to_br }}</h2>
+    {%- endif -%}
+
+    {%- if section.settings.subtitle != blank -%}
+    <h3 class="banner-subtitle typography-heading typography-heading--1">{{ section.settings.subtitle | newline_to_br }}</h3>
+    {%- endif -%}
+
+    {%- if section.settings.paragraph != blank -%}
+    <div class="banner-paragraph typography-body typography-body--2 typography-body--2-medium">{{ section.settings.paragraph | newline_to_br }}</div>
+    {%- endif -%}
+
+</div>
+
+
+
+
+{% schema %}
+
+{
+    "name": "HP Text",
+    "tag": "section",
+    "class": "section--hp-text",
+    "templates": ["index"],
+
+    "settings": [
+
+        {
+            "type": "richtext",
+            "id": "title",
+            "label": "Title",
+            "info": "Use CMD+U or CTRL+U to underline"
+        },
+
+        {
+            "type": "richtext",
+            "id": "subtitle",
+            "label": "Subtitle",
+            "info": "Use CMD+U or CTRL+U to underline"
+        },
+
+        {
+            "type": "richtext",
+            "id": "paragraph",
+            "label": "Paragraph",
+            "info": "Use CMD+U or CTRL+U to underline"
+        },
+
+        {
+            "type": "radio",
+            "id": "text_placement_hor",
+            "label": "Text Placement Horizontal",
+            "options": [
+                {
+                    "value": "start",
+                    "label": "Left"
+                },
+                {
+                    "value": "center",
+                    "label": "Center"
+                },
+                {
+                    "value": "end",
+                    "label": "Right"
+                }
+            ],
+            "default": "center"
+        },
+        
+        {
+            "type": "radio",
+            "id": "text_alignment",
+            "label": "Text Alignment",
+            "options": [
+                {
+                    "value": "start",
+                    "label": "Left"
+                },
+                {
+                    "value": "center",
+                    "label": "Center"
+                },
+                {
+                    "value": "end",
+                    "label": "Right"
+                }
+            ],
+            "default": "center"
+        },
+
+        {
+            "type": "header",
+            "content": "Section Padding"
+        },
+
+        {
+            "type": "range",
+            "id": "padding_top",
+            "min": 0,
+            "max": 120,
+            "step": 5,
+            "unit": "px",
+            "label": "Padding Top",
+            "default": 30
+        },
+
+        {
+            "type": "range",
+            "id": "padding_bottom",
+            "min": 0,
+            "max": 120,
+            "step": 5,
+            "unit": "px",
+            "label": "Padding bottom",
+            "default": 30
+        }
+    ],
+
+    "presets": [
+        {
+            "name": "HP Text"
+        }
+    ]
+}
+
+
+{% endschema %}
